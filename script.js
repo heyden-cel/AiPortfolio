@@ -43,12 +43,10 @@ const dashboardProjects = [
   { id: 3, title: 'Clean Architecture Test', date: 'Jul 21, 2023', views: 12, status: 'Draft' }
 ];
 
-// Initialization
-document.addEventListener('DOMContentLoaded', () => {
-    renderTemplates();
-    renderShowcase();
-    renderDashboardList();
-});
+// Initialization - direct call since script is at the bottom of body
+renderTemplates();
+renderShowcase();
+renderDashboardList();
 
 // View Navigation
 function navigate(viewName) {
@@ -69,6 +67,11 @@ function navigate(viewName) {
 // Rendering HTML
 function renderTemplates() {
     const grid = document.getElementById('templates-grid');
+    if (!grid) {
+        console.error('templates-grid not found');
+        return;
+    }
+    console.log('Rendering templates...', templates.length);
     grid.innerHTML = templates.map((tpl, i) => `
         <div class="template-card animate-fade" style="animation-delay: ${i * 0.05}s; cursor: pointer;"
              onmouseenter="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 30px ${tpl.ui.text}20'; this.querySelector('.hover-overlay').style.opacity='1'"
@@ -102,6 +105,10 @@ function renderTemplates() {
 
 function renderShowcase() {
     const grid = document.getElementById('showcase-grid');
+    if (!grid) {
+        console.error('showcase-grid not found');
+        return;
+    }
     grid.innerHTML = showcaseData.map((item, i) => `
       <div class="glass-panel animate-fade${i > 0 ? '-delay-'+i : ''}" style="padding: 0; overflow: hidden; text-align: left; transition: all 0.3s ease; cursor: pointer; border: 1px solid rgba(255,255,255,0.05);"
            onmouseenter="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 15px 30px ${item.tagBg}'"
@@ -123,7 +130,10 @@ function renderShowcase() {
 
 function renderDashboardList() {
     const list = document.getElementById('dashboard-list');
-    document.getElementById('dashboard-count').innerText = `You have ${dashboardProjects.length} existing projects.`;
+    const countEl = document.getElementById('dashboard-count');
+    if (countEl) countEl.innerText = `You have ${dashboardProjects.length} existing projects.`;
+    
+    if (!list) return;
     
     if (dashboardProjects.length === 0) {
         list.innerHTML = `<div style="text-align: center; padding: 4rem; color: var(--text-secondary);">You haven't generated any portfolios yet.</div>`;
@@ -494,7 +504,7 @@ function renderWizardResult() {
         if (formData.layout === 'Bento Grid') {
             return `
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; width: 100%; max-width: 1000px; margin-bottom: 4rem;">
-              <div class="glass-card stagger-2" style="padding: 2.5rem 1.5rem; grid-column: 1 / -1; display: flex; flexDirection: column; justify-content: center; position: relative; overflow: hidden;">
+              <div class="glass-card stagger-2" style="padding: 2.5rem 1.5rem; grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden;">
                 <div class="ambient-orb" style="position: absolute; top: 0; right: 0; width: 300px; height: 300px; background: ${accentColor}; filter: blur(100px); opacity: 0.1; border-radius: 50%;"></div>
                 <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; position: relative; z-index: 1;">
                    ${formData.image ? `<img src="${formData.image}" alt="Profile" style="width: 100px; height: 100px; border-radius: ${formData.aesthetic === 'Minimalist Monospace' ? '0' : '30px'}; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 15px 30px rgba(0,0,0,0.3);">` : ''}

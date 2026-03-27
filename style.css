@@ -286,6 +286,6 @@ body {
 .aesthetic-neumorphism .ambient-orb { opacity: 0.05; }
 
 /* Custom Utilities */
-.text-center { textAlign: center; }
+.text-center { text-align: center; }
 .flex-center { display: flex; align-items: center; justify-content: center; }
 .hidden { display: none !important; }
