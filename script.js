@@ -468,6 +468,12 @@ function renderWizardResult() {
     if(formData.colorPalette === 'Forest Canopy') { accentColor = '#00ff88'; secondaryAccent = '#00b359'; bgColor = 'linear-gradient(135deg, #051c11 0%, #0a3320 100%)'; }
     if(formData.aesthetic === 'Vibrant Neo-Brutalism') bgColor = secondaryAccent;
 
+    // Mobile detection for dynamic styling
+    const isMobile = window.innerWidth <= 768;
+    const titleFontSize = isMobile ? '2.5rem' : '4rem';
+    const subTitleFontSize = isMobile ? '3rem' : '5rem';
+    const padding = isMobile ? '2rem 1rem' : '4rem 2rem';
+
     let aestheticClass = 'aesthetic-modern';
     if(formData.aesthetic === 'Minimalist Monospace') aestheticClass = 'aesthetic-minimalist';
     if(formData.aesthetic === 'Vibrant Neo-Brutalism') aestheticClass = 'aesthetic-brutalism';
@@ -487,14 +493,14 @@ function renderWizardResult() {
     const getLayoutHTML = () => {
         if (formData.layout === 'Bento Grid') {
             return `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; width: 100%; max-width: 1000px; margin-bottom: 4rem;">
-              <div class="glass-card stagger-2" style="padding: 3rem; grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; width: 100%; max-width: 1000px; margin-bottom: 4rem;">
+              <div class="glass-card stagger-2" style="padding: 2.5rem 1.5rem; grid-column: 1 / -1; display: flex; flexDirection: column; justify-content: center; position: relative; overflow: hidden;">
                 <div class="ambient-orb" style="position: absolute; top: 0; right: 0; width: 300px; height: 300px; background: ${accentColor}; filter: blur(100px); opacity: 0.1; border-radius: 50%;"></div>
-                <div style="display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; position: relative; z-index: 1;">
-                   ${formData.image ? `<img src="${formData.image}" alt="Profile" style="width: 120px; height: 120px; border-radius: ${formData.aesthetic === 'Minimalist Monospace' ? '0' : '30px'}; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 15px 30px rgba(0,0,0,0.3);">` : ''}
+                <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; position: relative; z-index: 1;">
+                   ${formData.image ? `<img src="${formData.image}" alt="Profile" style="width: 100px; height: 100px; border-radius: ${formData.aesthetic === 'Minimalist Monospace' ? '0' : '30px'}; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 15px 30px rgba(0,0,0,0.3);">` : ''}
                    <div>
-                     <span style="font-size: 1rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Hello World</span>
-                     <h1 class="h1-title" style="font-size: 4rem; margin: 0.5rem 0 0 0; line-height: 1.1;">
+                     <span style="font-size: 0.9rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Hello World</span>
+                     <h1 class="h1-title" style="font-size: ${titleFontSize}; margin: 0.5rem 0 0 0; line-height: 1.1;">
                        I'm a <span>${formData.role || 'Pro'}</span>
                      </h1>
                    </div>
@@ -527,14 +533,14 @@ function renderWizardResult() {
             </div>`;
         } else if (formData.layout === 'Classic Hero & Sections') {
             return `
-            <div class="stagger-2" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px; margin: 0 auto; margin-bottom: 4rem; position: relative;">
+            <div class="stagger-2" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px; margin: 0 auto; margin-bottom: 4rem; position: relative; padding: 0 1rem;">
               <div class="ambient-orb" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; background: ${accentColor}; filter: blur(120px); opacity: 0.08; border-radius: 50%; z-index: 0;"></div>
               <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;">
-                ${formData.image ? `<img src="${formData.image}" alt="Profile" style="width: 160px; height: 160px; border-radius: ${formData.aesthetic === 'Minimalist Monospace' || formData.aesthetic === 'Vibrant Neo-Brutalism' ? '0' : '50%'}; object-fit: cover; margin-bottom: 2rem; border: 2px solid rgba(255,255,255,0.1); padding: 8px; background: rgba(255,255,255,0.03); box-shadow: ${formData.aesthetic === 'Vibrant Neo-Brutalism' ? '6px 6px 0 #000' : '0 20px 40px rgba(0,0,0,0.4)'};">` : ''}
-                <h1 class="h1-title" style="font-size: 5rem; margin: 0 0 1.5rem 0; line-height: 1.1;">
+                ${formData.image ? `<img src="${formData.image}" alt="Profile" style="width: 140px; height: 140px; border-radius: ${formData.aesthetic === 'Minimalist Monospace' || formData.aesthetic === 'Vibrant Neo-Brutalism' ? '0' : '50%'}; object-fit: cover; margin-bottom: 2rem; border: 2px solid rgba(255,255,255,0.1); padding: 8px; background: rgba(255,255,255,0.03); box-shadow: ${formData.aesthetic === 'Vibrant Neo-Brutalism' ? '6px 6px 0 #000' : '0 20px 40px rgba(0,0,0,0.4)'};">` : ''}
+                <h1 class="h1-title" style="font-size: ${subTitleFontSize}; margin: 0 0 1.5rem 0; line-height: 1.1;">
                    Hi, I'm a <br/><span style="${formData.aesthetic === 'modern' ? `background: linear-gradient(to right, #fff, ${accentColor}); -webkit-background-clip: text; -webkit-text-fill-color: transparent;` : ''}">${formData.role || 'Professional'}</span>
                 </h1>
-                <p style="font-size: 1.4rem; color: var(--text-secondary); max-width: 700px; margin: 0 0 2rem 0; line-height: 1.6; font-weight: 300;">
+                <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 0 2rem 0; line-height: 1.6; font-weight: 300;">
                   Specializing in <span style="color: ${formData.aesthetic === 'Vibrant Neo-Brutalism' ? '#fff' : accentColor};">${formData.skills || 'creating amazing digital experiences'}</span>.
                 </p>
                 <div class="glass-card" style="padding: 2rem; max-width: 600px; margin-bottom: 3rem;">
@@ -609,17 +615,17 @@ function renderWizardResult() {
           </div>
         </nav>
         
-        <div class="sleek-scroll presentation-bg" style="background: ${bgColor}; overflow-y: auto; height: 75vh; position: relative; z-index: 10; padding: ${formData.layout === 'Fullscreen Interactive' ? '0' : '4rem 2rem'}; display: flex; flex-direction: column; align-items: center; justify-content: ${formData.layout === 'Fullscreen Interactive' ? 'center' : 'flex-start'};">
-          <div class="stagger-1" style="display: ${formData.layout === 'Fullscreen Interactive' ? 'none' : 'inline-flex'}; align-items: center; gap: 8px; padding: 8px 20px; background: linear-gradient(90deg, ${secondaryAccent}20, ${accentColor}20); color: ${accentColor}; border-radius: 50px; margin-bottom: 3rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.75rem; border: 1px solid ${accentColor}40; backdrop-filter: blur(10px);">
+        <div class="sleek-scroll presentation-bg" style="background: ${bgColor}; overflow-y: auto; height: 75vh; position: relative; z-index: 10; padding: ${formData.layout === 'Fullscreen Interactive' ? '0' : padding}; display: flex; flex-direction: column; align-items: center; justify-content: ${formData.layout === 'Fullscreen Interactive' ? 'center' : 'flex-start'};">
+          <div class="stagger-1" style="display: ${formData.layout === 'Fullscreen Interactive' ? 'none' : 'inline-flex'}; align-items: center; gap: 8px; padding: 8px 20px; background: linear-gradient(90deg, ${secondaryAccent}20, ${accentColor}20); color: ${accentColor}; border-radius: 50px; margin-bottom: 2rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.75rem; border: 1px solid ${accentColor}40; backdrop-filter: blur(10px);">
             <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${accentColor};"></span>
             AI Generated • ${formData.aesthetic}
           </div>
           
           ${getLayoutHTML()}
           
-          <div class="stagger-4" style="display: flex; gap: 1.5rem; margin-top: ${formData.layout === 'Fullscreen Interactive' ? '0' : 'auto'}; position: ${formData.layout === 'Fullscreen Interactive' ? 'absolute' : 'relative'}; bottom: ${formData.layout === 'Fullscreen Interactive' ? '4rem' : 'auto'}; right: ${formData.layout === 'Fullscreen Interactive' ? '4rem' : 'auto'}; padding-top: 2rem; z-index: 20;">
-             <button class="premium-button"><span style="margin-right: 8px;">↓</span> Download Source</button>
-             <button class="premium-button premium-button-primary"><span style="margin-right: 8px;">▲</span> Deploy</button>
+          <div class="stagger-4" style="display: flex; gap: 1rem; margin-top: ${formData.layout === 'Fullscreen Interactive' ? '0' : 'auto'}; position: ${formData.layout === 'Fullscreen Interactive' ? 'absolute' : 'relative'}; bottom: ${formData.layout === 'Fullscreen Interactive' ? '2rem' : 'auto'}; right: ${formData.layout === 'Fullscreen Interactive' ? '2rem' : 'auto'}; padding-top: 2rem; z-index: 20; width: ${isMobile ? '100%' : 'auto'}; flex-direction: ${isMobile ? 'column' : 'row'};">
+             <button class="premium-button" style="width: 100%"><span style="margin-right: 8px;">↓</span> Download Source</button>
+             <button class="premium-button premium-button-primary" style="width: 100%"><span style="margin-right: 8px;">▲</span> Deploy</button>
           </div>
         </div>
       </div>
