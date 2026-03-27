@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portfolio Maker</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Dynamic Background -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    
+    <main class="app-container">
+        
+        <!-- Landing Page View -->
+        <section id="view-landing" class="view active">
+            <div class="landing-container animate-fade">
+              <nav class="glass-panel" style="position: relative; padding: 1.2rem 2.5rem; border-radius: 0; border-top: none; border-left: none; border-right: none; display: flex; justify-content: space-between; align-items: center;">
+                <div style="flex: 1; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.5px; cursor: pointer;">
+                  <span style="color: var(--accent-secondary)">AI</span>Folio<span style="color: var(--accent-primary)">.</span>
+                </div>
+                
+                <div style="position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 2.5rem; align-items: center;">
+                  <span onclick="document.getElementById('templates-sec').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer; color: #ccc; font-weight: 600; transition: all 0.2s ease; letter-spacing: 0.5px; font-size: 1rem;">Templates</span>
+                  <span onclick="document.getElementById('showcase-sec').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer; color: #ccc; font-weight: 600; transition: all 0.2s ease; letter-spacing: 0.5px; font-size: 1rem;">Showcase</span>
+                </div>
+
+                <div style="flex: 1; display: flex; justify-content: flex-end;">
+                  <button class="btn-secondary" onclick="navigate('auth')" style="padding: 8px 24px; font-weight: 600;">Sign In</button>
+                </div>
+              </nav>
+
+              <section style="min-height: calc(100vh - 80px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 2rem;">
+                <div class="glass-panel animate-fade-delay-1" style="max-width: 900px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.05); background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%); padding: 4rem 2rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+                  <h1 class="gradient-text" style="font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1.5px;">
+                    Craft a Professional Portfolio Engine with AI
+                  </h1>
+                  <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 3.5rem; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+                    Elevate your digital presence. Let our intelligent AI engine analyze your professional background and generate a stunning, bespoke portfolio website instantly.
+                  </p>
+                  
+                  <div class="animate-fade-delay-2" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn-primary" onclick="startWizard()" style="padding: 16px 48px; font-size: 1.2rem;">
+                      Start AI Generation ✨
+                    </button>
+                    <button class="btn-secondary" onclick="document.getElementById('templates-sec').scrollIntoView({behavior: 'smooth'})" style="padding: 16px 48px; font-size: 1.2rem; background: rgba(255,255,255,0.05);">
+                      Browse Templates
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="animate-fade-delay-2" style="margin-top: 4rem; color: var(--text-secondary); opacity: 0.6; font-size: 0.9rem;">
+                  <p>Trusted by professionals from Top Tech Companies</p>
+                  <div style="display: flex; gap: 2rem; margin-top: 1rem; justify-content: center;">
+                    <span style="font-weight: 600; letter-spacing: 1px;">GOOGLE</span>
+                    <span style="font-weight: 600; letter-spacing: 1px;">META</span>
+                    <span style="font-weight: 600; letter-spacing: 1px;">AMAZON</span>
+                    <span style="font-weight: 600; letter-spacing: 1px;">MICROSOFT</span>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Templates Section -->
+              <section id="templates-sec" style="padding: 6rem 2rem 4rem 2rem; max-width: 1400px; margin: 0 auto;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <h2 style="font-size: 3rem; margin-bottom: 0.5rem; letter-spacing: -1px; font-weight: 800;">Start with a Foundation</h2>
+                    <p style="color: var(--text-secondary); font-size: 1.2rem;">Or let the AI generate one from scratch.</p>
+                  </div>
+                  <button class="btn-secondary" style="padding: 10px 24px; border-radius: 30px; height: fit-content;">View All Templates</button>
+                </div>
+                <div id="templates-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem 2rem;"></div>
+              </section>
+
+              <!-- Showcase Section -->
+              <section id="showcase-sec" style="padding: 6rem 2rem 8rem 2rem; max-width: 1200px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: -1.5px; font-weight: 800;">Generated by <span class="gradient-text">AIFolio</span></h2>
+                <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 4.5rem;">Explore stunning portfolios engineered in seconds by our AI.</p>
+                <div id="showcase-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;"></div>
+              </section>
+              
+              <footer style="padding: 2.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem;">
+                <div style="display: flex; justify-content: center; gap: 2rem; color: var(--text-secondary); font-size: 0.9rem;">
+                  <span style="cursor: pointer;">Terms of Service</span>
+                  <span style="cursor: pointer;">Privacy Policy</span>
+                </div>
+                <p style="margin-top: 1.5rem; color: #555; font-size: 0.8rem; cursor: default; user-select: none;" ondblclick="navigate('admin')">
+                  © 2026 AIFolio Engine. All rights reserved.
+                </p>
+              </footer>
+            </div>
+        </section>
+
+        <!-- Auth Page View -->
+        <section id="view-auth" class="view">
+            <div class="wizard-container animate-fade" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+              <button class="btn-secondary" onclick="navigate('landing')" style="position: absolute; top: 2rem; left: 2rem; border: none; background: rgba(255,255,255,0.05);">← Back to Home</button>
+              <div class="glass-panel" style="width: 100%; max-width: 450px; padding: 3rem 2.5rem;">
+                <div style="text-align: center; margin-bottom: 2.5rem;">
+                  <div style="font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 1rem;">
+                    <span style="color: var(--accent-secondary)">AI</span>Folio<span style="color: var(--accent-primary)">.</span>
+                  </div>
+                  <h2 id="auth-title" style="font-size: 1.8rem; letter-spacing: -0.5px;">Welcome back</h2>
+                  <p id="auth-subtitle" style="color: var(--text-secondary); margin-top: 0.5px;">Enter your details to access your portfolios.</p>
+                </div>
+                <form onsubmit="event.preventDefault(); navigate('dashboard');" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                  <div id="auth-name-field" style="display: none;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary)">Full Name</label>
+                    <input type="text" class="neo-input" placeholder="John Doe">
+                  </div>
+                  <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary)">Email Address</label>
+                    <input type="email" class="neo-input" placeholder="you@example.com" required>
+                  </div>
+                  <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary)">Password</label>
+                    <input type="password" class="neo-input" placeholder="••••••••" required>
+                  </div>
+                  <button type="submit" id="auth-submit-btn" class="btn-primary" style="margin-top: 1rem; padding: 14px; width: 100%;">Sign In</button>
+                </form>
+                <div style="margin-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary);">
+                  <span id="auth-toggle-text">Don't have an account? </span>
+                  <span onclick="toggleAuthMode()" id="auth-toggle-link" style="color: var(--accent-secondary); cursor: pointer; font-weight: 600;">Sign up here</span>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <!-- Dashboard View -->
+        <section id="view-dashboard" class="view">
+            <div class="wizard-container animate-fade" style="min-height: 100vh; padding: 2rem;">
+              <nav class="glass-panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; padding: 1rem 2rem; border-radius: 15px;">
+                <h2 style="font-size: 1.5rem; font-weight: bold;">My Dashboard</h2>
+                <div style="display: flex; gap: 1rem;">
+                  <button class="btn-secondary" onclick="navigate('landing')" style="padding: 8px 24px; font-size: 0.9rem;">Home</button>
+                  <button class="btn-primary" onclick="startWizard()" style="padding: 8px 24px; font-size: 0.9rem;">+ Create New</button>
+                  <button class="btn-secondary" onclick="navigate('landing')" style="padding: 8px 20px; font-size: 0.9rem;">Log Out</button>
+                </div>
+              </nav>
+
+              <div style="max-width: 1000px; margin: 0 auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                  <h1 style="font-size: 2.5rem; letter-spacing: -1px;">Your Portfolios</h1>
+                  <span id="dashboard-count" style="color: var(--text-secondary);">Loading...</span>
+                </div>
+                <!-- Rendered dynamically by script.js -->
+                <div id="dashboard-list" style="display: flex; flex-direction: column; gap: 1.2rem;"></div>
+              </div>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard View -->
+        <section id="view-admin" class="view">
+            <div id="admin-login-view" class="wizard-container animate-fade" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+              <button class="btn-secondary" onclick="navigate('landing')" style="position: absolute; top: 2rem; left: 2rem; border: none; background: rgba(255,255,255,0.05);">← Back to Home</button>
+              <div class="glass-panel" style="width: 100%; max-width: 400px; padding: 3rem 2.5rem; text-align: center; border-top: 4px solid #ff0080;">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 0, 128, 0.15); color: #ff0080; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; font-size: 1.2rem;">🔒</div>
+                <h2 style="font-size: 1.8rem; letter-spacing: -0.5px; margin-bottom: 0.5rem;">Admin Access</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Restricted area. Please authenticate.</p>
+                <form onsubmit="handleAdminLogin(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+                  <input type="password" id="admin-pwd" class="neo-input" placeholder="Enter password..." required>
+                  <div id="admin-error" style="color: #ff5f56; font-size: 0.85rem; text-align: left; display: none;"></div>
+                  <button type="submit" class="btn-primary" style="padding: 14px; background: linear-gradient(135deg, #ff0080, #7928ca); box-shadow: 0 4px 15px rgba(255, 0, 128, 0.3);">Unlock Portal</button>
+                </form>
+              </div>
+            </div>
+            <!-- Admin dashboard UI rendered dynamically by script.js -->
+            <div id="admin-dashboard-container" class="wizard-container animate-fade" style="min-height: 100vh; padding: 2rem; display: none;"></div>
+        </section>
+
+        <!-- Wizard View -->
+        <section id="view-wizard" class="view">
+            <!-- Wizard Form Steps -->
+            <div id="wizard-form-container" class="wizard-container animate-fade" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+              <div class="glass-panel" style="max-width: 650px; width: 100%; position: relative; overflow: hidden;">
+                <!-- Progress Bar -->
+                <div id="wizard-progress" style="position: absolute; top: 0; left: 0; height: 4px; background: var(--accent-glow); width: 16.66%; transition: width 0.4s ease;"></div>
+                
+                <div style="display: flex; justify-content: space-between; margin-bottom: 3rem; align-items: center;">
+                  <div>
+                     <span style="color: var(--accent-secondary); font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;">Configuration</span>
+                     <h2 id="wizard-step-title" style="font-size: 2rem; margin-top: 0.5rem; letter-spacing: -0.5px;">Step 1 of 6</h2>
+                  </div>
+                  <button class="btn-secondary" onclick="navigate('landing')" style="padding: 10px 20px; font-size: 0.9rem; border: none; background: rgba(255,255,255,0.05);">✕ Cancel</button>
+                </div>
+
+                <div id="wizard-step-content" style="min-height: 200px;"></div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 3rem;">
+                  <button id="wizard-back-btn" class="btn-secondary" onclick="wizardBack()" style="padding: 14px 28px; display: none;">Back</button>
+                  <button id="wizard-next-btn" class="btn-primary" onclick="wizardNext()" style="padding: 14px 36px; min-width: 160px;">Continue</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wizard Generating Screen -->
+            <div id="wizard-generating-container" class="wizard-container animate-fade" style="min-height: 80vh; display: none; flex-direction: column; justify-content: center; align-items: center;">
+              <div class="glass-panel text-center animate-pulse-glow" style="padding: 4rem; max-width: 600px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="loader-ring" style="width: 80px; height: 80px; border: 4px solid var(--glass-border); border-top-color: var(--accent-primary); border-radius: 50%; padding:0; animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; margin: 0 auto 2.5rem auto;"></div>
+                <h2 class="gradient-text" style="font-size: 2.2rem; margin-bottom: 1.5rem; letter-spacing: -0.5px;">AI is Architecting...</h2>
+                <p style="color: var(--text-secondary); font-size: 1.2rem; line-height: 1.6;">Analyzing your skills and selecting the optimal aesthetic framework for your digital presence.</p>
+              </div>
+            </div>
+
+            <!-- Wizard Result Screen (Step 7) -->
+            <div id="wizard-result-container" style="display: none;"></div>
+        </section>
+        
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
