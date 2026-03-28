@@ -2,16 +2,17 @@ import { useState } from 'react';
 
 export default function AdminDashboard({ onLogout }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (password === 'admin123') {
+    if (email === 'admin@gmail.com' && password === 'admin@1234') {
       setIsAuthenticated(true);
       setError('');
     } else {
-      setError('Invalid admin credentials. Hint: admin123');
+      setError('Access Denied: Invalid administrator credentials.');
     }
   };
 
@@ -35,12 +36,20 @@ export default function AdminDashboard({ onLogout }) {
           
           <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <input 
+              type="email" 
+              className="neo-input" 
+              placeholder="Enter admin email..." 
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              autoFocus
+              required 
+            />
+            <input 
               type="password" 
               className="neo-input" 
               placeholder="Enter password..." 
               value={password}
               onChange={e => setPassword(e.target.value)}
-              autoFocus
               required 
             />
             {error && <div style={{ color: '#ff5f56', fontSize: '0.85rem', textAlign: 'left' }}>{error}</div>}

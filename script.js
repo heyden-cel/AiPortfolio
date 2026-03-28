@@ -247,17 +247,19 @@ function toggleAuthMode() {
 // Admin Handlers
 function handleAdminLogin(e) {
     e.preventDefault();
+    const email = document.getElementById('admin-email').value;
     const pwd = document.getElementById('admin-pwd').value;
     const err = document.getElementById('admin-error');
-    if(pwd === 'admin123') {
+    
+    if(email === 'admin@gmail.com' && pwd === 'admin@1234') {
         err.style.display = 'none';
         document.getElementById('admin-login-view').style.display = 'none';
-        isLoggedIn = true; // Admin counts as logged in
+        isLoggedIn = true;
         localStorage.setItem('isLoggedIn', 'true');
         renderAdminDashboard();
     } else {
         err.style.display = 'block';
-        err.innerText = 'Invalid admin credentials. Hint: admin123';
+        err.innerText = 'Access Denied: Invalid administrator credentials.';
     }
 }
 
@@ -273,7 +275,7 @@ function renderAdminDashboard() {
         { label: 'Server Status', value: 'Healthy', change: '99.9%' }
     ];
     const users = [
-        { id: 1, name: 'Alice Chen', email: 'alice@example.com', plan: 'Pro', status: 'Active' },
+        { id: 1, name: 'Heyden Cel', email: 'heyden@example.com', plan: 'Enterprise', status: 'Active' },
         { id: 2, name: 'Marcus Johnson', email: 'marcus@example.com', plan: 'Free', status: 'Active' },
         { id: 3, name: 'Elena Rodriguez', email: 'elena@example.com', plan: 'Pro', status: 'Offline' },
         { id: 4, name: 'David Smith', email: 'david@example.com', plan: 'Enterprise', status: 'Active' },
