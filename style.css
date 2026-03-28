@@ -331,3 +331,32 @@ body {
 .text-center { text-align: center; }
 .flex-center { display: flex; align-items: center; justify-content: center; }
 .hidden { display: none !important; }
+
+@keyframes progressRing {
+    0% { stroke-dashoffset: 440; }
+    100% { stroke-dashoffset: 80; }
+}
+
+@keyframes successPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(39, 201, 63, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 30px rgba(39, 201, 63, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(39, 201, 63, 0); }
+}
+
+.deploy-success-glow {
+    animation: successPulse 2s infinite;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--accent-primary);
+    border-radius: 2px;
+    animation: confetti-fall 3s ease-out infinite;
+}
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}

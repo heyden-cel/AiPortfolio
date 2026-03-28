@@ -3,6 +3,8 @@ import { useState } from 'react';
 export default function AICreatorWizard({ onFinish, initialConfig }) {
   const [step, setStep] = useState(initialConfig ? 7 : 1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [deployState, setDeployState] = useState('idle'); // idle, deploying, success
+  const [deployStep, setDeployStep] = useState(0);
   const [formData, setFormData] = useState({
     role: initialConfig?.role || '',
     skills: initialConfig?.skills || '',
@@ -29,6 +31,73 @@ export default function AICreatorWizard({ onFinish, initialConfig }) {
       setStep(7); // 7 = Result view
     }, 4500);
   };
+
+  const handleDeploy = () => {
+    setDeployState('deploying');
+    const steps = [
+        { msg: 'Initializing edge functions...', delay: 800 },
+        { msg: 'Optimizing high-fidelity assets...', delay: 1200 },
+        { msg: 'Generating SSL certification...', delay: 1000 },
+        { msg: 'Propagating global DNS records...', delay: 1500 }
+    ];
+    
+    let current = 0;
+    const process = () => {
+        if (current < steps.length) {
+            setDeployStep(current);
+            setTimeout(() => {
+                current++;
+                process();
+            }, steps[current].delay);
+        } else {
+            setDeployState('success');
+        }
+    };
+    process();
+  };
+
+  if (deployState === 'deploying') {
+    const steps = ['Initializing edge...', 'Optimizing assets...', 'Generating SSL...', 'Propagating DNS...'];
+    return (
+      <div className="wizard-container animate-fade" style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'fixed', top:0, left:0, width:'100%', height:'100%', background:'rgba(0,0,0,0.9)', backdropFilter:'blur(10px)', zIndex: 2000 }}>
+        <div className="glass-panel text-center animate-fade" style={{ padding: '4rem', maxWidth: '600px', width: '100%' }}>
+            <div className="loader-ring" style={{ width: '80px', height: '80px', border: '4px solid rgba(255,255,255,0.1)', borderTopColor: 'var(--accent-primary)', borderRadius: '50%', animation: 'spin 1s infinite', margin: '0 auto 2rem auto' }}></div>
+            <h2 className="gradient-text" style={{ fontSize: '2rem', marginBottom: '1rem' }}>Architecting Cloud...</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', fontFamily: 'monospace' }}>{steps[deployStep]}</p>
+            <div style={{ marginTop: '2rem', background: 'rgba(255,255,255,0.05)', height: '6px', borderRadius: '10px', overflow: 'hidden' }}>
+                <div style={{ width: `${(deployStep / steps.length) * 100}%`, height: '100%', background: 'var(--accent-primary)', transition: 'width 0.5s ease' }}></div>
+            </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (deployState === 'success') {
+    const mockUrl = `https://aifolio.dev/${formData.role.toLowerCase().replace(/\s+/g, '-')}-${Math.floor(1000 + Math.random() * 9000)}`;
+    return (
+      <div className="wizard-container animate-fade" style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'fixed', top:0, left:0, width:'100%', height:'100%', background:'rgba(0,0,0,0.9)', backdropFilter:'blur(10px)', zIndex: 2000 }}>
+         {/* Confetti simulation */}
+         {[...Array(50)].map((_, i) => (
+            <div key={i} className="confetti" style={{ left: `${Math.random()*100}vw`, animationDelay: `${Math.random()*2}s`, backgroundColor: i % 2 === 0 ? 'var(--accent-primary)' : 'var(--accent-secondary)' }}></div>
+         ))}
+         <div className="glass-panel text-center animate-fade" style={{ padding: '4rem', maxWidth: '700px', width: '100%', position: 'relative', overflow: 'hidden' }}>
+            <div className="deploy-success-glow" style={{ width: '100px', height: '100px', background: '#27c93f', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2.5rem auto', fontSize: '3rem' }}>✓</div>
+            <h1 className="gradient-text" style={{ fontSize: '3rem', marginBottom: '1rem' }}>You are Live!</h1>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', marginBottom: '3rem' }}>Your professional presence has been engineered and deployed to the global edge network.</p>
+            
+            <div className="glass-panel" style={{ background: 'rgba(0,0,0,0.3)', padding: '1.5rem', borderRadius: '15px', marginBottom: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <code style={{ color: 'var(--accent-secondary)', fontSize: '1.1rem' }}>{mockUrl}</code>
+                <button className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8rem' }} onClick={() => { navigator.clipboard.writeText(mockUrl); alert('Copied!'); }}>Copy</button>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
+                <button className="btn-primary" style={{ padding: '16px 40px' }} onClick={() => window.open(mockUrl, '_blank')}>View Live Site ↗</button>
+                <button className="btn-secondary" style={{ padding: '16px 40px', background: 'rgba(255,255,255,0.05)' }} onClick={onFinish}>Back to Dashboard</button>
+            </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isGenerating) {
     return (
@@ -329,8 +398,8 @@ export default function AICreatorWizard({ onFinish, initialConfig }) {
           )}
           
           <div className="stagger-4" style={{ display: 'flex', gap: '1.5rem', marginTop: formData.layout === 'Fullscreen Interactive' ? '0' : 'auto', position: formData.layout === 'Fullscreen Interactive' ? 'absolute' : 'relative', bottom: formData.layout === 'Fullscreen Interactive' ? '4rem' : 'auto', right: formData.layout === 'Fullscreen Interactive' ? '4rem' : 'auto', paddingTop: '2rem', zIndex: 20 }}>
-             <button className="premium-button"><span style={{ marginRight: '8px' }}>↓</span> Download Source</button>
-             <button className="premium-button premium-button-primary"><span style={{ marginRight: '8px' }}>▲</span> Deploy</button>
+             <button className="premium-button" onClick={() => alert('Starting local source download...')}><span style={{ marginRight: '8px' }}>↓</span> Download Source</button>
+             <button className="premium-button premium-button-primary" onClick={handleDeploy}><span style={{ marginRight: '8px' }}>▲</span> Deploy</button>
           </div>
         </div>
       </div>

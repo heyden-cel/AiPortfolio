@@ -710,10 +710,85 @@ function renderWizardResult() {
           ${getLayoutHTML()}
           
           <div class="stagger-4" style="display: flex; gap: 1rem; margin-top: ${formData.layout === 'Fullscreen Interactive' ? '0' : 'auto'}; position: ${formData.layout === 'Fullscreen Interactive' ? 'absolute' : 'relative'}; bottom: ${formData.layout === 'Fullscreen Interactive' ? '2rem' : 'auto'}; right: ${formData.layout === 'Fullscreen Interactive' ? '2rem' : 'auto'}; padding-top: 2rem; z-index: 20; width: ${isMobile ? '100%' : 'auto'}; flex-direction: ${isMobile ? 'column' : 'row'};">
-             <button class="premium-button" style="width: 100%"><span style="margin-right: 8px;">↓</span> Download Source</button>
-             <button class="premium-button premium-button-primary" style="width: 100%"><span style="margin-right: 8px;">▲</span> Deploy</button>
+             <button class="premium-button" style="width: 100%" onclick="alert('Starting local source download...')"><span style="margin-right: 8px;">↓</span> Download Source</button>
+             <button class="premium-button premium-button-primary" style="width: 100%" onclick="startDeployment()"><span style="margin-right: 8px;">▲</span> Deploy</button>
           </div>
         </div>
       </div>
     `;
+}
+
+function startDeployment() {
+    const overlay = document.getElementById('deployment-overlay');
+    overlay.style.display = 'flex';
+    
+    const steps = [
+        { msg: 'Initializing edge functions...', delay: 800 },
+        { msg: 'Optimizing high-fidelity assets...', delay: 1200 },
+        { msg: 'Generating SSL certification...', delay: 1000 },
+        { msg: 'Propagating global DNS records...', delay: 1500 }
+    ];
+    
+    let currentStep = 0;
+    
+    const renderStatus = (msg) => {
+        overlay.innerHTML = `
+            <div class="glass-panel text-center animate-fade" style="padding: 4rem; max-width: 600px; width: 100%;">
+                <div class="loader-ring" style="width: 80px; height: 80px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 1s infinite; margin: 0 auto 2rem auto;"></div>
+                <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 1rem;">Architecting Cloud...</h2>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; font-family: monospace;">${msg}</p>
+                <div style="margin-top: 2rem; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; overflow: hidden;">
+                    <div style="width: ${(currentStep / steps.length) * 100}%; height: 100%; background: var(--accent-primary); transition: width 0.5s ease;"></div>
+                </div>
+            </div>
+        `;
+    };
+    
+    const processStep = () => {
+        if (currentStep < steps.length) {
+            renderStatus(steps[currentStep].msg);
+            setTimeout(() => {
+                currentStep++;
+                processStep();
+            }, steps[currentStep].delay);
+        } else {
+            renderDeploySuccess();
+        }
+    };
+    
+    processStep();
+}
+
+function renderDeploySuccess() {
+    const overlay = document.getElementById('deployment-overlay');
+    overlay.style.display = 'flex';
+    const mockUrl = `https://aifolio.dev/${formData.role.toLowerCase().replace(/\s+/g, '-')}-${Math.floor(1000 + Math.random() * 9000)}`;
+    
+    overlay.innerHTML = `
+        <div class="glass-panel text-center animate-fade" style="padding: 4rem; max-width: 700px; width: 100%; position: relative; overflow: hidden;">
+            <div class="deploy-success-glow" style="width: 100px; height: 100px; background: #27c93f; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2.5rem auto; font-size: 3rem;">✓</div>
+            <h1 class="gradient-text" style="font-size: 3rem; margin-bottom: 1rem;">You are Live!</h1>
+            <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 3rem;">Your professional presence has been engineered and deployed to the global edge network.</p>
+            
+            <div class="glass-panel" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 15px; margin-bottom: 3rem; display: flex; align-items: center; justify-content: space-between;">
+                <code style="color: var(--accent-secondary); font-size: 1.1rem;">${mockUrl}</code>
+                <button class="btn-secondary" style="padding: 8px 16px; font-size: 0.8rem;" onclick="navigator.clipboard.writeText('${mockUrl}'); this.innerText='Copied!'">Copy</button>
+            </div>
+            
+            <div style="display: flex; gap: 1.5rem; justify-content: center;">
+                <button class="btn-primary" style="padding: 16px 40px;" onclick="window.open('${mockUrl}', '_blank')">View Live Site ↗</button>
+                <button class="btn-secondary" style="padding: 16px 40px; background: rgba(255,255,255,0.05);" onclick="location.reload()">Back to Dashboard</button>
+            </div>
+        </div>
+    `;
+    
+    // Simple confetti
+    for(let i=0; i<50; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.animationDelay = Math.random() * 2 + 's';
+        c.style.backgroundColor = i % 2 === 0 ? 'var(--accent-primary)' : 'var(--accent-secondary)';
+        overlay.appendChild(c);
+    }
 }
