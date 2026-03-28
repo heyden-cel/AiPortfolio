@@ -578,42 +578,69 @@ function renderWizardResult() {
 
     const getLayoutHTML = () => {
         if (formData.layout === 'Bento Grid') {
+            const skillsArray = formData.skills ? formData.skills.split(',').map(s => s.trim()) : ['Design', 'Code', 'Product'];
+            
             return `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; width: 100%; max-width: 1000px; margin-bottom: 4rem;">
-              <div class="glass-card stagger-2" style="padding: 2.5rem 1.5rem; grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden;">
-                <div class="ambient-orb" style="position: absolute; top: 0; right: 0; width: 300px; height: 300px; background: ${accentColor}; filter: blur(100px); opacity: 0.1; border-radius: 50%;"></div>
-                <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; position: relative; z-index: 1;">
-                   ${formData.image ? `<img src="${formData.image}" alt="Profile" style="width: 100px; height: 100px; border-radius: ${formData.aesthetic === 'Minimalist Monospace' ? '0' : '30px'}; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 15px 30px rgba(0,0,0,0.3);">` : ''}
-                   <div>
-                     <span style="font-size: 0.9rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Hello World</span>
-                     <h1 class="h1-title" style="font-size: ${titleFontSize}; margin: 0.5rem 0 0 0; line-height: 1.1;">
+            <div class="bento-grid-container stagger-2">
+              <div class="glass-card bento-item bento-hero" style="position: relative;">
+                <div class="ambient-orb" style="position: absolute; top: -50px; right: -50px; width: 250px; height: 250px; background: ${accentColor}; filter: blur(100px); opacity: 0.1; border-radius: 50%;"></div>
+                <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; height: 100%;">
+                   ${formData.image ? `<img src="${formData.image}" alt="Profile" style="width: 120px; height: 120px; border-radius: ${formData.aesthetic === 'Minimalist Monospace' ? '0' : '32px'}; object-fit: cover; border: 2px solid rgba(255,255,255,0.08); box-shadow: 0 15px 35px rgba(0,0,0,0.4);">` : ''}
+                   <div style="flex: 1;">
+                     <span style="font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700;">Engineered Profile</span>
+                     <h1 class="h1-title" style="font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0.5rem 0; line-height: 1.0; font-weight: 900;">
                        I'm a <span>${formData.role || 'Pro'}</span>
                      </h1>
+                     <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <span style="width: 40px; height: 2px; background: ${accentColor}; margin-top: 10px;"></span>
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 1.1rem; max-width: 400px; line-height: 1.5;">Architecting digital excellence through ${formData.aesthetic.toLowerCase()} patterns.</p>
+                     </div>
                    </div>
                 </div>
               </div>
-              <div class="glass-card stagger-3" style="padding: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div style="width: 30px; height: 30px; border-radius: 8px; background: ${accentColor}20; display: flex; align-items: center; justify-content: center; color: ${accentColor};">✦</div>
-                  <h3 style="color: #fff; margin: 0; font-size: 1.1rem; font-weight: 600;">Core Expertise</h3>
-                </div>
-                <p style="margin: 0; font-size: 1.2rem; color: var(--text-secondary); line-height: 1.6;">${formData.skills || 'UI/UX, Advanced Code'}</p>
+
+              <div class="glass-card bento-item bento-stats">
+                  <span style="font-size: 0.75rem; color: var(--accent-secondary); font-weight: bold; text-transform: uppercase;">Engagement</span>
+                  <div style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">1.2k+</div>
+                  <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Unique views this month across global networks.</p>
               </div>
-              <div class="glass-card stagger-3" style="padding: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div style="width: 30px; height: 30px; border-radius: 8px; background: ${secondaryAccent}20; display: flex; align-items: center; justify-content: center; color: ${secondaryAccent};">●</div>
-                  <h3 style="color: #fff; margin: 0; font-size: 1.1rem; font-weight: 600;">Current Palette</h3>
+
+              <div class="glass-card bento-item bento-skills">
+                <h3 style="color: #fff; margin: 0 0 1.5rem 0; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.5px;">Core Expertise</h3>
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
+                   ${skillsArray.slice(0, 3).map(skill => `
+                      <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                          <span>${skill}</span>
+                          <span style="color: var(--text-secondary);">95%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                          <div class="skill-bar-fill" style="transform: scaleX(0.${Math.floor(Math.random() * 3) + 7});"></div>
+                        </div>
+                      </div>
+                   `).join('')}
                 </div>
-                <p style="margin: 0; font-size: 1.4rem; color: #fff; font-weight: 500;">${formData.colorPalette}</p>
               </div>
-              <div class="glass-card stagger-4" style="padding: 3rem; grid-column: 1 / -1; position: relative; overflow: hidden;">
-                <div class="ambient-orb" style="position: absolute; bottom: -50px; left: -50px; width: 200px; height: 200px; background: ${secondaryAccent}; filter: blur(80px); opacity: 0.1; border-radius: 50%;"></div>
-                <h3 style="color: #fff; margin: 0 0 1.5rem 0; font-size: 1.3rem; font-weight: 600;">About Me</h3>
-                <p style="margin: 0; font-size: 1.15rem; line-height: 1.8; color: var(--text-secondary); max-width: 800px;">${formData.bio || 'Detailed AI generated biography based on your skills will appear here. Architecting elegant solutions through design and code.'}</p>
-                <div style="display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;">
-                  ${formData.socialGithub ? `<span class="premium-button">GitHub ↗</span>` : ''}
-                  ${formData.socialLinkedin ? `<span class="premium-button">LinkedIn ↗</span>` : ''}
-                  ${(!formData.socialGithub && !formData.socialLinkedin) ? `<span class="premium-button premium-button-primary">Contact Me</span>` : ''}
+
+              <div class="glass-card bento-item bento-tech">
+                <h3 style="color: #fff; margin: 0 0 1.5rem 0; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                   <span style="width: 8px; height: 8px; border-radius: 50%; background: ${accentColor};"></span> Tech Stack Matrix
+                </h3>
+                <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                   ${skillsArray.map(skill => `<span class="tech-badge">${skill}</span>`).join('')}
+                </div>
+              </div>
+
+              <div class="glass-card bento-item bento-bio" style="position: relative;">
+                <div class="ambient-orb" style="position: absolute; bottom: -100px; left: -100px; width: 300px; height: 300px; background: ${secondaryAccent}; filter: blur(120px); opacity: 0.08; border-radius: 50%;"></div>
+                <div style="position: relative; z-index: 1;">
+                   <h3 style="color: #fff; margin: 0 0 1.2rem 0; font-size: 1.2rem; font-weight: 700;">Executive Biography</h3>
+                   <p style="margin: 0; font-size: 1.2rem; line-height: 1.8; color: var(--text-secondary); max-width: 900px;">${formData.bio || 'Professional summary expertly crafted by AI based on your technical background and design preferences. Specializing in high-fidelity digital products.'}</p>
+                   <div style="display: flex; gap: 1.5rem; margin-top: 2.5rem; flex-wrap: wrap;">
+                     ${formData.socialGithub ? `<span class="premium-button" style="border-radius: 12px; padding: 12px 24px;">GitHub Profile ↗</span>` : ''}
+                     ${formData.socialLinkedin ? `<span class="premium-button" style="border-radius: 12px; padding: 12px 24px;">LinkedIn Connect ↗</span>` : ''}
+                     <span class="premium-button premium-button-primary" style="border-radius: 12px; padding: 12px 24px;">Download Resume</span>
+                   </div>
                 </div>
               </div>
             </div>`;

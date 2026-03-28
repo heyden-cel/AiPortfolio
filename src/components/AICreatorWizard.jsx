@@ -305,46 +305,69 @@ export default function AICreatorWizard({ onFinish, initialConfig }) {
             <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: accentColor }}></span>
             AI Generated • {formData.aesthetic}
           </div>
-          
-          {formData.layout === 'Bento Grid' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', width: '100%', maxWidth: '1000px', marginBottom: '4rem' }}>
-              <div className="glass-card stagger-2" style={{ padding: '3rem', gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-                <div className="ambient-orb" style={{ position: 'absolute', top: 0, right: 0, width: '300px', height: '300px', background: accentColor, filter: 'blur(100px)', opacity: 0.1, borderRadius: '50%' }}></div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
-                   {formData.image && <img src={formData.image} alt="Profile" style={{ width: '120px', height: '120px', borderRadius: formData.aesthetic === 'Minimalist Monospace' ? '0' : '30px', objectFit: 'cover', border: `2px solid rgba(255,255,255,0.1)`, boxShadow: `0 15px 30px rgba(0,0,0,0.3)` }} />}
-                   <div>
-                     <span style={{ fontSize: '1rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600 }}>Hello World</span>
-                     <h1 className="h1-title" style={{ fontSize: '4rem', margin: '0.5rem 0 0 0', lineHeight: 1.1 }}>
+               {formData.layout === 'Bento Grid' && (
+            <div className="bento-grid-container stagger-2" style={{ marginBottom: '4rem' }}>
+              <div className="glass-card bento-item bento-hero" style={{ position: 'relative' }}>
+                <div className="ambient-orb" style={{ position: 'absolute', top: '-50px', right: '-50px', width: '250px', height: '250px', background: accentColor, filter: 'blur(100px)', opacity: 0.1, borderRadius: '50%' }}></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem', flexWrap: 'wrap', height: '100%' }}>
+                   {formData.image && <img src={formData.image} alt="Profile" style={{ width: '120px', height: '120px', borderRadius: formData.aesthetic === 'Minimalist Monospace' ? '0' : '32px', objectFit: 'cover', border: '2px solid rgba(255,255,255,0.08)', boxShadow: '0 15px 35px rgba(0,0,0,0.4)' }} />}
+                   <div style={{ flex: 1 }}>
+                     <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '2.5px', fontWeight: 700 }}>Engineered Profile</span>
+                     <h1 className="h1-title" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', margin: '0.5rem 0', lineHeight: 1.0, fontWeight: 900 }}>
                        I'm a <span>{formData.role || 'Pro'}</span>
                      </h1>
+                     <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+                        <span style={{ width: '40px', height: '2px', background: accentColor, marginTop: '10px' }}></span>
+                        <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '400px', lineHeight: 1.5 }}>Architecting digital excellence through {formData.aesthetic.toLowerCase()} patterns.</p>
+                     </div>
                    </div>
                 </div>
               </div>
 
-              <div className="glass-card stagger-3" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ width: '30px', height: '30px', borderRadius: '8px', background: `${accentColor}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: accentColor }}>✦</div>
-                  <h3 style={{color: '#fff', margin: 0, fontSize: '1.1rem', fontWeight: 600}}>Core Expertise</h3>
-                </div>
-                <p style={{ margin: 0, fontSize: '1.2rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{formData.skills || 'UI/UX, Advanced Code'}</p>
+              <div className="glass-card bento-item bento-stats">
+                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-secondary)', fontWeight: 'bold', textTransform: 'uppercase' }}>Engagement</span>
+                  <div style={{ fontSize: '2.5rem', fontWeight: 800, margin: '0.5rem 0' }}>1.2k+</div>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: 0 }}>Unique views this month across global networks.</p>
               </div>
 
-              <div className="glass-card stagger-3" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ width: '30px', height: '30px', borderRadius: '8px', background: `${secondaryAccent}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: secondaryAccent }}>●</div>
-                  <h3 style={{color: '#fff', margin: 0, fontSize: '1.1rem', fontWeight: 600}}>Current Palette</h3>
+              <div className="glass-card bento-item bento-skills">
+                <h3 style={{ color: '#fff', margin: '0 0 1.5rem 0', fontSize: '1.2rem', fontWeight: 700, letterSpacing: '-0.5px' }}>Core Expertise</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                   {(formData.skills ? formData.skills.split(',').map(s => s.trim()) : ['Design', 'Code', 'Product']).slice(0, 3).map((skill, idx) => (
+                      <div key={idx}>
+                        <div style={{ display: 'flex', justifySpaceBetween: 'space-between', fontSize: '0.9rem' }}>
+                          <span>{skill}</span>
+                          <span style={{ color: 'var(--text-secondary)' }}>95%</span>
+                        </div>
+                        <div className="skill-bar-container">
+                          <div className="skill-bar-fill" style={{ transform: `scaleX(0.${Math.floor(Math.random() * 3) + 7})` }}></div>
+                        </div>
+                      </div>
+                   ))}
                 </div>
-                <p style={{ margin: 0, fontSize: '1.4rem', color: '#fff', fontWeight: 500 }}>{formData.colorPalette}</p>
               </div>
 
-              <div className="glass-card stagger-4" style={{ padding: '3rem', gridColumn: '1 / -1', position: 'relative', overflow: 'hidden' }}>
-                <div className="ambient-orb" style={{ position: 'absolute', bottom: -50, left: -50, width: '200px', height: '200px', background: secondaryAccent, filter: 'blur(80px)', opacity: 0.1, borderRadius: '50%' }}></div>
-                <h3 style={{color: '#fff', margin: '0 0 1.5rem 0', fontSize: '1.3rem', fontWeight: 600}}>About Me</h3>
-                <p style={{ margin: 0, fontSize: '1.15rem', lineHeight: '1.8', color: 'var(--text-secondary)', maxWidth: '800px' }}>{formData.bio || 'Detailed AI generated biography based on your skills will appear here. Architecting elegant solutions through design and code.'}</p>
-                <div style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem', flexWrap: 'wrap' }}>
-                  {formData.socialGithub && <span className="premium-button">GitHub ↗</span>}
-                  {formData.socialLinkedin && <span className="premium-button">LinkedIn ↗</span>}
-                  {(!formData.socialGithub && !formData.socialLinkedin) && <span className="premium-button premium-button-primary">Contact Me</span>}
+              <div className="glass-card bento-item bento-tech">
+                <h3 style={{ color: '#fff', margin: '0 0 1.5rem 0', fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '10px' }}>
+                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: accentColor }}></span> Tech Stack Matrix
+                </h3>
+                <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+                   {(formData.skills ? formData.skills.split(',').map(s => s.trim()) : ['UI/UX', 'Cloud']).map((skill, idx) => (
+                      <span key={idx} className="tech-badge">{skill}</span>
+                   ))}
+                </div>
+              </div>
+
+              <div className="glass-card bento-item bento-bio" style={{ position: 'relative' }}>
+                <div className="ambient-orb" style={{ position: 'absolute', bottom: '-100px', left: '-100px', width: '300px', height: '300px', background: secondaryAccent, filter: 'blur(120px)', opacity: 0.08, borderRadius: '50%' }}></div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                   <h3 style={{ color: '#fff', margin: '0 0 1.2rem 0', fontSize: '1.2rem', fontWeight: 700 }}>Executive Biography</h3>
+                   <p style={{ margin: 0, fontSize: '1.2rem', lineHeight: 1.8, color: 'var(--text-secondary)', maxWidth: '900px' }}>{formData.bio || 'Professional summary expertly crafted by AI based on your technical background and design preferences. Specializing in high-fidelity digital products.'}</p>
+                   <div style={{ display: 'flex', gap: '1.5rem', marginTop: '2.5rem', flexWrap: 'wrap' }}>
+                     {formData.socialGithub && <span className="premium-button" style={{ borderRadius: '12px', padding: '12px 24px' }}>GitHub Profile ↗</span>}
+                     {formData.socialLinkedin && <span className="premium-button" style={{ borderRadius: '12px', padding: '12px 24px' }}>LinkedIn Connect ↗</span>}
+                     <span className="premium-button premium-button-primary" style={{ borderRadius: '12px', padding: '12px 24px' }}>Download Resume</span>
+                   </div>
                 </div>
               </div>
             </div>
