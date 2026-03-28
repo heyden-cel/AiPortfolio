@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import heroImg from '../assets/hero.png';
 
-export default function LandingPage({ onStart, onAuth, onAdmin, isLoggedIn, onLogout }) {
+export default function LandingPage({ onStart, onAuth, onAdmin, isLoggedIn, onLogout, onProfile }) {
   const showcaseRef = useRef(null);
   const templatesRef = useRef(null);
 
@@ -27,6 +27,7 @@ export default function LandingPage({ onStart, onAuth, onAdmin, isLoggedIn, onLo
         <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
           {isLoggedIn ? (
             <>
+              <button className="btn-secondary" onClick={onProfile} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>Profile</button>
               <button className="btn-secondary" onClick={() => onStart(null)} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>Dashboard</button>
               <button className="btn-secondary" onClick={onLogout} style={{ padding: '8px 20px', fontSize: '0.9rem', background: 'rgba(255,255,255,0.05)' }}>Log Out</button>
             </>

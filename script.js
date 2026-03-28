@@ -79,6 +79,9 @@ function navigate(viewName) {
     if (viewName === 'dashboard') {
         updateDashboardNav();
     }
+    if (viewName === 'profile') {
+        renderProfile();
+    }
 }
 
 function updateDashboardNav() {
@@ -227,6 +230,7 @@ function updateNavbar() {
     if (isLoggedIn) {
         navContainer.innerHTML = `
             <div style="display: flex; gap: 1rem; align-items: center;">
+                <button class="btn-secondary" onclick="navigate('profile')" style="padding: 8px 24px; font-size: 0.9rem;">Profile</button>
                 <button class="btn-secondary" onclick="navigate('dashboard')" style="padding: 8px 24px; font-size: 0.9rem;">Dashboard</button>
                 <button class="btn-secondary" onclick="logout()" style="padding: 8px 20px; font-size: 0.9rem; background: rgba(255,255,255,0.05);">Log Out</button>
             </div>
@@ -261,6 +265,122 @@ function logout() {
     localStorage.setItem('currentUserEmail', '');
     updateNavbar();
     navigate('landing');
+}
+
+// Profile Handlers
+function renderProfile() {
+    const container = document.getElementById('profile-container');
+    if (!container) return;
+
+    const saved = localStorage.getItem('userProfile');
+    const profile = saved ? JSON.parse(saved) : {
+        name: 'Heyden Cel',
+        role: 'Enterprise Architect',
+        bio: 'Pioneering the next generation of AI-driven interfaces with high-performance engines and glassmorphism design.',
+        github: 'heyden-cel',
+        linkedin: 'heyden-cel',
+        twitter: 'heyden_cel',
+        location: 'Silicon Valley, CA'
+    };
+
+    container.innerHTML = `
+      <nav class="glass-panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; padding: 1rem 2rem; border-radius: 15px;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+           <h2 style="font-size: 1.5rem; font-weight: bold;">My Profile</h2>
+           <span style="background: rgba(121, 40, 202, 0.2); color: var(--accent-secondary); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase;">Verified</span>
+        </div>
+        <button class="btn-secondary" onclick="navigate('dashboard')" style="padding: 8px 24px; font-size: 0.9rem;">← Dashboard</button>
+      </nav>
+
+      <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: minmax(250px, 1fr) 2fr; gap: 2rem;">
+        <div class="glass-panel" style="padding: 2.5rem 2rem; text-align: center; height: fit-content; border-top: 4px solid var(--accent-secondary);">
+          <div style="position: relative; width: 120px; height: 120px; margin: 0 auto 1.5rem auto;">
+            <div style="width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); display: flex; align-items: center; justify-content: center; fontSize: 3rem; fontWeight: 800; border: 4px solid rgba(255,255,255,0.1);">
+              ${profile.name.charAt(0)}
+            </div>
+            <div style="position: absolute; bottom: 5px; right: 5px; width: 28px; height: 28px; background: #27c93f; border-radius: 50%; border: 3px solid #000;"></div>
+          </div>
+          <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; letter-spacing: -0.5px;">${profile.name}</h2>
+          <p style="color: var(--accent-secondary); font-weight: 600; font-size: 0.95rem; margin-bottom: 1.5rem;">${profile.role}</p>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem; text-align: left; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 12px;">
+             <div style="display: flex; align-items: center; gap: 10px; fontSize: 0.85rem;">
+                <span style="color: var(--text-secondary);">📧</span> <span>${currentUserEmail || 'heyden@example.com'}</span>
+             </div>
+             <div style="display: flex; align-items: center; gap: 10px; fontSize: 0.85rem;">
+                <span style="color: var(--text-secondary);">📍</span> <span>${profile.location}</span>
+             </div>
+          </div>
+          <button class="btn-primary" onclick="toggleProfileEdit()" style="width: 100%; margin-top: 2rem; padding: 12px;">Edit Identity</button>
+        </div>
+
+        <div id="profile-details-card" class="glass-panel" style="padding: 2.5rem;">
+           <h3 style="font-size: 1.5rem; marginBottom: 1rem; letterSpacing: -0.5px;">About Me</h3>
+           <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem; margin-bottom: 3rem;">${profile.bio}</p>
+           <h3 style="font-size: 1.5rem; marginBottom: 1.5rem; letterSpacing: -0.5px;">Social Presence</h3>
+           <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+              <div class="glass-panel" style="padding: 1rem 1.5rem; flex: 1; min-width: 200px;">
+                 <p style="color: var(--text-secondary); fontSize: 0.8rem; marginBottom: 0.5rem; fontWeight: 600;">GITHUB</p>
+                 <p style="fontSize: 1rem; fontWeight: 700;">github.com/${profile.github}</p>
+              </div>
+              <div class="glass-panel" style="padding: 1rem 1.5rem; flex: 1; min-width: 200px;">
+                 <p style="color: var(--text-secondary); fontSize: 0.8rem; marginBottom: 0.5rem; fontWeight: 600;">LINKEDIN</p>
+                 <p style="fontSize: 1rem; fontWeight: 700;">linkedin.com/in/${profile.linkedin}</p>
+              </div>
+           </div>
+        </div>
+      </div>
+    `;
+}
+
+function toggleProfileEdit() {
+    const card = document.getElementById('profile-details-card');
+    const saved = localStorage.getItem('userProfile');
+    const profile = saved ? JSON.parse(saved) : { name: 'Heyden Cel', role: 'Enterprise Architect', bio: 'Pioneering the next generation of AI-driven interfaces with high-performance engines and glassmorphism design.', github: 'heyden-cel', linkedin: 'heyden-cel', twitter: 'heyden_cel', location: 'Silicon Valley, CA' };
+
+    card.innerHTML = `
+        <div class="animate-fade" style="display: flex; flex-direction: column; gap: 1.5rem;">
+               <div>
+                  <label style="display: block; marginBottom: 0.6rem; fontSize: 0.9rem; color: var(--text-secondary); fontWeight: 600;">Full Name</label>
+                  <input type="text" id="edit-profile-name" class="neo-input" value="${profile.name}">
+               </div>
+               <div>
+                  <label style="display: block; marginBottom: 0.6rem; fontSize: 0.9rem; color: var(--text-secondary); fontWeight: 600;">Professional Headline</label>
+                  <input type="text" id="edit-profile-role" class="neo-input" value="${profile.role}">
+               </div>
+               <div>
+                  <label style="display: block; marginBottom: 0.6rem; fontSize: 0.9rem; color: var(--text-secondary); fontWeight: 600;">Professional Bio</label>
+                  <textarea id="edit-profile-bio" class="neo-input" rows="4" style="resize: none;">${profile.bio}</textarea>
+               </div>
+               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div>
+                    <label style="display: block; marginBottom: 0.6rem; fontSize: 0.8rem; color: var(--text-secondary);">GitHub</label>
+                    <input type="text" id="edit-profile-github" class="neo-input" value="${profile.github}">
+                  </div>
+                  <div>
+                    <label style="display: block; marginBottom: 0.6rem; fontSize: 0.8rem; color: var(--text-secondary);">LinkedIn</label>
+                    <input type="text" id="edit-profile-linkedin" class="neo-input" value="${profile.linkedin}">
+                  </div>
+               </div>
+               <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                  <button class="btn-primary" onclick="saveProfile()" style="padding: 12px 32px;">Save Profile</button>
+                  <button class="btn-secondary" onclick="renderProfile()" style="padding: 12px 32px;">Cancel</button>
+               </div>
+        </div>
+    `;
+}
+
+function saveProfile() {
+    const updated = {
+        name: document.getElementById('edit-profile-name').value,
+        role: document.getElementById('edit-profile-role').value,
+        bio: document.getElementById('edit-profile-bio').value,
+        github: document.getElementById('edit-profile-github').value,
+        linkedin: document.getElementById('edit-profile-linkedin').value,
+        twitter: 'heyden_cel',
+        location: 'Silicon Valley, CA'
+    };
+    localStorage.setItem('userProfile', JSON.stringify(updated));
+    renderProfile();
 }
 
 // Auth Handlers

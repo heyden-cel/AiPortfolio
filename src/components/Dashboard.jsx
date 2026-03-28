@@ -1,4 +1,4 @@
-export default function Dashboard({ onNew, onLogout, onHome, onOpen, onAdmin, userEmail }) {
+export default function Dashboard({ onNew, onLogout, onHome, onOpen, onAdmin, onProfile, userEmail }) {
   const isAdmin = userEmail === 'admin@gmail.com';
   // Mock previously generated portfolios
   const previousWork = [
@@ -17,6 +17,7 @@ export default function Dashboard({ onNew, onLogout, onHome, onOpen, onAdmin, us
               ✦ Admin Hub
             </button>
           )}
+          <button className="btn-secondary" onClick={onProfile} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>My Profile</button>
           <button className="btn-secondary" onClick={onHome} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>Home</button>
           <button className="btn-primary" onClick={onNew} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>+ Create New</button>
           <button className="btn-secondary" onClick={onLogout} style={{ padding: '8px 20px', fontSize: '0.9rem' }}>Log Out</button>

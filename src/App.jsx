@@ -4,6 +4,7 @@ import AICreatorWizard from './components/AICreatorWizard';
 import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
+import ProfilePage from './components/ProfilePage';
 import './App.css';
 
 function App() {
@@ -51,10 +52,11 @@ function App() {
       <div className="bg-blob blob-2"></div>
       
       <main className="app-container">
-        {currentView === 'landing' && <LandingPage isLoggedIn={isLoggedIn} onLogout={handleLogout} onStart={handleStartWizard} onAuth={() => setCurrentView('auth')} onAdmin={() => setCurrentView('admin')} />}
+        {currentView === 'landing' && <LandingPage isLoggedIn={isLoggedIn} onLogout={handleLogout} onStart={handleStartWizard} onAuth={() => setCurrentView('auth')} onAdmin={() => setCurrentView('admin')} onProfile={() => setCurrentView('profile')} />}
         {currentView === 'auth' && <AuthPage onBack={() => setCurrentView('landing')} onAuthSuccess={handleLogin} />}
-        {currentView === 'dashboard' && <Dashboard userEmail={userEmail} onNew={() => handleStartWizard(null)} onOpen={(config) => handleStartWizard(config)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} onAdmin={() => setCurrentView('admin')} />}
+        {currentView === 'dashboard' && <Dashboard userEmail={userEmail} onNew={() => handleStartWizard(null)} onOpen={(config) => handleStartWizard(config)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} onAdmin={() => setCurrentView('admin')} onProfile={() => setCurrentView('profile')} />}
         {currentView === 'admin' && <AdminDashboard onLogout={handleLogout} />}
+        {currentView === 'profile' && <ProfilePage userEmail={userEmail} onBack={() => setCurrentView('dashboard')} />}
         {currentView === 'wizard' && <AICreatorWizard initialConfig={wizardConfig} onFinish={() => setCurrentView('dashboard')} />}
       </main>
     </>
