@@ -289,7 +289,10 @@ function renderProfile() {
            <h2 style="font-size: 1.5rem; font-weight: bold;">My Profile</h2>
            <span style="background: rgba(121, 40, 202, 0.2); color: var(--accent-secondary); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase;">Verified</span>
         </div>
-        <button class="btn-secondary" onclick="navigate('dashboard')" style="padding: 8px 24px; font-size: 0.9rem;">← Dashboard</button>
+        <div style="display: flex; gap: 1rem;">
+           <button class="btn-secondary" onclick="navigate('landing')" style="padding: 8px 24px; font-size: 0.9rem;">Home</button>
+           <button class="btn-secondary" onclick="navigate('dashboard')" style="padding: 8px 24px; font-size: 0.9rem;">← Dashboard</button>
+        </div>
       </nav>
 
       <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: minmax(250px, 1fr) 2fr; gap: 2rem;">

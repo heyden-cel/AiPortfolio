@@ -56,7 +56,7 @@ function App() {
         {currentView === 'auth' && <AuthPage onBack={() => setCurrentView('landing')} onAuthSuccess={handleLogin} />}
         {currentView === 'dashboard' && <Dashboard userEmail={userEmail} onNew={() => handleStartWizard(null)} onOpen={(config) => handleStartWizard(config)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} onAdmin={() => setCurrentView('admin')} onProfile={() => setCurrentView('profile')} />}
         {currentView === 'admin' && <AdminDashboard onLogout={handleLogout} />}
-        {currentView === 'profile' && <ProfilePage userEmail={userEmail} onBack={() => setCurrentView('dashboard')} />}
+        {currentView === 'profile' && <ProfilePage userEmail={userEmail} onBack={() => setCurrentView('dashboard')} onHome={() => setCurrentView('landing')} />}
         {currentView === 'wizard' && <AICreatorWizard initialConfig={wizardConfig} onFinish={() => setCurrentView('dashboard')} />}
       </main>
     </>

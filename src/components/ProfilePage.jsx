@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function ProfilePage({ onBack, userEmail }) {
+export default function ProfilePage({ onBack, onHome, userEmail }) {
   const [profile, setProfile] = useState({
     name: 'Heyden Cel',
     role: 'Enterprise Architect',
@@ -37,6 +37,7 @@ export default function ProfilePage({ onBack, userEmail }) {
            <span style={{ background: 'rgba(121, 40, 202, 0.2)', color: 'var(--accent-secondary)', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', textTransform: 'uppercase' }}>Verified</span>
         </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
+          <button className="btn-secondary" onClick={onHome} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>Home</button>
           <button className="btn-secondary" onClick={onBack} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>← Dashboard</button>
         </div>
       </nav>
