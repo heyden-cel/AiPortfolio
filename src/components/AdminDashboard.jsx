@@ -8,7 +8,7 @@ export default function AdminDashboard({ onLogout }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email === 'admin@gmail.com' && password === 'admin@1234') {
+    if (email === 'admin@gmail.com' && password === 'Admin@1234') {
       setIsAuthenticated(true);
       setError('');
     } else {
@@ -69,11 +69,11 @@ export default function AdminDashboard({ onLogout }) {
   ];
 
   const recentUsers = [
-    { id: 1, name: 'Alice Chen', email: 'alice@example.com', plan: 'Pro', status: 'Active' },
-    { id: 2, name: 'Marcus Johnson', email: 'marcus@example.com', plan: 'Free', status: 'Active' },
-    { id: 3, name: 'Elena Rodriguez', email: 'elena@example.com', plan: 'Pro', status: 'Offline' },
-    { id: 4, name: 'David Smith', email: 'david@example.com', plan: 'Enterprise', status: 'Active' },
-    { id: 5, name: 'Zoe Wong', email: 'zoe.w@example.com', plan: 'Free', status: 'Active' }
+    { id: 1, name: 'Heyden Cel', email: 'heyden@example.com', plan: 'Enterprise', status: 'Active' },
+    { id: 2, name: 'Alice Chen', email: 'alice@example.com', plan: 'Pro', status: 'Active' },
+    { id: 3, name: 'Marcus Johnson', email: 'marcus@example.com', plan: 'Free', status: 'Active' },
+    { id: 4, name: 'Elena Rodriguez', email: 'elena@example.com', plan: 'Pro', status: 'Offline' },
+    { id: 5, name: 'David Smith', email: 'david@example.com', plan: 'Enterprise', status: 'Active' }
   ];
 
   return (
@@ -106,8 +106,8 @@ export default function AdminDashboard({ onLogout }) {
            {/* Recent Users Table */}
            <div className="glass-panel" style={{ padding: '2rem', border: '1px solid rgba(255,255,255,0.05)', overflowX: 'auto' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                 <h3 style={{ fontSize: '1.5rem', margin: 0 }}>Recent Signups</h3>
-                 <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>View All</button>
+                 <h3 style={{ fontSize: '1.5rem', margin: 0 }}>People Logged In</h3>
+                 <span style={{ background: 'rgba(39, 201, 63, 0.15)', color: '#27c93f', padding: '4px 10px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold' }}>LIVE</span>
               </div>
               
               <table style={{ width: '100%', minWidth: '500px', borderCollapse: 'collapse', textAlign: 'left' }}>

@@ -251,7 +251,7 @@ function handleAdminLogin(e) {
     const pwd = document.getElementById('admin-pwd').value;
     const err = document.getElementById('admin-error');
     
-    if(email === 'admin@gmail.com' && pwd === 'admin@1234') {
+    if(email === 'admin@gmail.com' && pwd === 'Admin@1234') {
         err.style.display = 'none';
         document.getElementById('admin-login-view').style.display = 'none';
         isLoggedIn = true;
@@ -305,6 +305,40 @@ function renderAdminDashboard() {
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
+          <div class="glass-panel" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.05); overflow-x: auto;">
+             <div style="display: flex; justify-content: space-between; align-items: center; marginBottom: 2rem;">
+                <h3 style="font-size: 1.5rem; margin: 0;">People Logged In</h3>
+                <span class="badge" style="background: rgba(39, 201, 63, 0.1); color: #27c93f; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">LIVE</span>
+             </div>
+             
+             <table style="width: 100%; min-width: 500px; border-collapse: collapse; text-align: left; margin-top: 1.5rem;">
+                <thead>
+                   <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-secondary); font-size: 0.9rem;">
+                      <th style="padding: 1rem 0; font-weight: 500;">User</th>
+                      <th style="padding: 1rem 0; font-weight: 500;">Email</th>
+                      <th style="padding: 1rem 0; font-weight: 500;">Tier</th>
+                      <th style="padding: 1rem 0; font-weight: 500;">Session</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   ${users.map(user => `
+                      <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                         <td style="padding: 1.2rem 0; font-weight: 600;">${user.name}</td>
+                         <td style="padding: 1.2rem 0; color: var(--text-secondary);">${user.email}</td>
+                         <td style="padding: 1.2rem 0;">
+                            <span style="background: ${user.plan === 'Enterprise' ? 'rgba(0, 255, 245, 0.15)' : 'rgba(139, 92, 246, 0.15)'}; color: ${user.plan === 'Enterprise' ? '#00fff5' : 'var(--accent-secondary)'}; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">${user.plan}</span>
+                         </td>
+                         <td style="padding: 1.2rem 0;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                               <div style="width: 8px; height: 8px; border-radius: 50%; background: ${user.status === 'Active' ? '#27c93f' : '#888'};"></div>
+                               <span style="font-size: 0.9rem; color: var(--text-secondary);">${user.status}</span>
+                            </div>
+                         </td>
+                      </tr>
+                   `).join('')}
+                </tbody>
+             </table>
+          </div>
            <div class="glass-panel" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.05); overflow-x: auto;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                  <h3 style="font-size: 1.5rem; margin: 0;">Recent Signups</h3>
