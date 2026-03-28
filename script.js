@@ -3,7 +3,7 @@ let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 let pendingGeneration = false;
 
 // State variables
-let currentView = isLoggedIn ? 'dashboard' : 'auth';
+let currentView = isLoggedIn ? 'landing' : 'auth';
 let wizardStep = 1;
 let isLoginMode = true;
 let formData = {
@@ -222,7 +222,7 @@ function login() {
         navigate('wizard');
         renderWizardStep();
     } else {
-        navigate('dashboard');
+        navigate('landing');
     }
 }
 

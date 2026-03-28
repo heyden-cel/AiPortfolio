@@ -8,7 +8,7 @@ import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
-  const [currentView, setCurrentView] = useState(localStorage.getItem('isLoggedIn') === 'true' ? 'dashboard' : 'auth');
+  const [currentView, setCurrentView] = useState(localStorage.getItem('isLoggedIn') === 'true' ? 'landing' : 'auth');
   const [wizardConfig, setWizardConfig] = useState(null);
   const [pendingWizardAfterLogin, setPendingWizardAfterLogin] = useState(null);
 
@@ -20,7 +20,7 @@ function App() {
       setPendingWizardAfterLogin(null);
       setCurrentView('wizard');
     } else {
-      setCurrentView('dashboard');
+      setCurrentView('landing');
     }
   };
 
