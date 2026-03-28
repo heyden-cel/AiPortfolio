@@ -15,6 +15,10 @@ let formData = {
   socialLinkedin: ''
 };
 
+// Persistent Auth State
+let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+let pendingGeneration = false;
+
 // Data models
 const templates = [
   { title: 'Black White Grayscale Portfolio', author: 'AIFolio Engine', config: { aesthetic: 'Minimalist Monospace', layout: 'Bento Grid', colorPalette: 'Deep Space (Dark)' }, ui: { bg: '#111', text: '#fff', b1: '#333', b2: '#222' } },
@@ -47,9 +51,13 @@ const dashboardProjects = [
 renderTemplates();
 renderShowcase();
 renderDashboardList();
+updateNavbar();
 
 // View Navigation
 function navigate(viewName) {
+    // If navigating to landing, update navbar just in case
+    if (viewName === 'landing') updateNavbar();
+    
     document.querySelectorAll('.view').forEach(v => {
         v.classList.remove('active');
         v.style.display = 'none';
@@ -87,14 +95,15 @@ function renderTemplates() {
             <div style="text-align: center;">
               <h3 style="margin: 0; font-size: clamp(1.2rem, 2vw, 1.8rem); color: ${tpl.ui.text}; letter-spacing: -1px; font-weight: 800; font-family: ${tpl.title.includes('Monospace') ? 'monospace' : 'inherit'};">PORTFOLIO</h3>
             </div>
-            <div style="display: flex; gap: 8px; justify-content: flex-end;">
-               <div style="width: 30%; height: 6px; background: ${tpl.ui.b2}; border-radius: 4px;"></div>
-               <div style="width: 20%; height: 6px; background: ${tpl.ui.b1}; border-radius: 4px;"></div>
-            </div>
-            <div class="hover-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease-in-out;">
-               <button class="btn-primary" onclick="startWizard('${encodeURIComponent(JSON.stringify(tpl.config))}')" style="padding: 10px 24px; font-size: 0.9rem; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">Use Template</button>
-            </div>
           </div>
+          <div style="display: flex; gap: 8px; justify-content: flex-end;">
+             <div style="width: 30%; height: 6px; background: ${tpl.ui.b2}; border-radius: 4px;"></div>
+             <div style="width: 20%; height: 6px; background: ${tpl.ui.b1}; border-radius: 4px;"></div>
+          </div>
+          <div class="hover-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease-in-out;">
+             <button class="btn-primary" onclick="event.stopPropagation(); startWizard('${encodeURIComponent(JSON.stringify(tpl.config))}')" style="padding: 10px 24px; font-size: 0.9rem; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">Use Template</button>
+          </div>
+        </div>
           <div style="margin-top: 1rem; padding: 0 0.5rem;">
             <h4 style="margin: 0; font-size: 0.95rem; font-weight: 600; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${tpl.title}</h4>
             <p style="margin: 4px 0 0 0; font-size: 0.8rem; color: #888;">${tpl.author}</p>
@@ -165,6 +174,45 @@ function renderDashboardList() {
     }).join('');
 }
 
+function updateNavbar() {
+    const navContainer = document.getElementById('nav-auth-container');
+    if (!navContainer) return;
+
+    if (isLoggedIn) {
+        navContainer.innerHTML = `
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <button class="btn-secondary" onclick="navigate('dashboard')" style="padding: 8px 24px; font-size: 0.9rem;">Dashboard</button>
+                <button class="btn-secondary" onclick="logout()" style="padding: 8px 20px; font-size: 0.9rem; background: rgba(255,255,255,0.05);">Log Out</button>
+            </div>
+        `;
+    } else {
+        navContainer.innerHTML = `
+            <button id="btn-login-main" class="btn-secondary" onclick="navigate('auth')" style="padding: 8px 24px; font-weight: 600;">Sign In</button>
+        `;
+    }
+}
+
+function login() {
+    isLoggedIn = true;
+    localStorage.setItem('isLoggedIn', 'true');
+    updateNavbar();
+    
+    if (pendingGeneration) {
+        pendingGeneration = false;
+        navigate('wizard');
+        renderWizardStep();
+    } else {
+        navigate('dashboard');
+    }
+}
+
+function logout() {
+    isLoggedIn = false;
+    localStorage.setItem('isLoggedIn', 'false');
+    updateNavbar();
+    navigate('landing');
+}
+
 // Auth Handlers
 function toggleAuthMode() {
     isLoginMode = !isLoginMode;
@@ -184,6 +232,8 @@ function handleAdminLogin(e) {
     if(pwd === 'admin123') {
         err.style.display = 'none';
         document.getElementById('admin-login-view').style.display = 'none';
+        isLoggedIn = true; // Admin counts as logged in
+        localStorage.setItem('isLoggedIn', 'true');
         renderAdminDashboard();
     } else {
         err.style.display = 'block';
@@ -446,6 +496,12 @@ function wizardNext() {
         wizardStep++;
         renderWizardStep();
     } else {
+        if (!isLoggedIn) {
+            alert('Please sign in to generate your AI portfolio.');
+            pendingGeneration = true;
+            navigate('auth');
+            return;
+        }
         handleGenerate();
     }
 }

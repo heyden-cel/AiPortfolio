@@ -7,20 +7,49 @@ import AdminDashboard from './components/AdminDashboard';
 import './App.css';
 
 function App() {
-  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'wizard' | 'auth' | 'dashboard' | 'admin'
+  const [currentView, setCurrentView] = useState('landing');
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const [wizardConfig, setWizardConfig] = useState(null);
+  const [pendingWizardAfterLogin, setPendingWizardAfterLogin] = useState(null);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    localStorage.setItem('isLoggedIn', 'true');
+    if (pendingWizardAfterLogin) {
+      setWizardConfig(pendingWizardAfterLogin);
+      setPendingWizardAfterLogin(null);
+      setCurrentView('wizard');
+    } else {
+      setCurrentView('dashboard');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem('isLoggedIn', 'false');
+    setCurrentView('landing');
+  };
+
+  const handleStartWizard = (config) => {
+    if (!isLoggedIn) {
+      setPendingWizardAfterLogin(config || true);
+      setCurrentView('auth');
+    } else {
+      setWizardConfig(config && !config.nativeEvent ? config : null);
+      setCurrentView('wizard');
+    }
+  };
 
   return (
     <>
-      {/* Dynamic Background */}
       <div className="bg-blob blob-1"></div>
       <div className="bg-blob blob-2"></div>
       
       <main className="app-container">
-        {currentView === 'landing' && <LandingPage onStart={(config) => { setWizardConfig(config && !config.nativeEvent ? config : null); setCurrentView('wizard'); }} onAuth={() => setCurrentView('auth')} onAdmin={() => setCurrentView('admin')} />}
-        {currentView === 'auth' && <AuthPage onBack={() => setCurrentView('landing')} onAuthSuccess={() => setCurrentView('dashboard')} />}
-        {currentView === 'dashboard' && <Dashboard onNew={() => { setWizardConfig(null); setCurrentView('wizard'); }} onLogout={() => setCurrentView('landing')} onHome={() => setCurrentView('landing')} />}
-        {currentView === 'admin' && <AdminDashboard onLogout={() => setCurrentView('landing')} />}
+        {currentView === 'landing' && <LandingPage isLoggedIn={isLoggedIn} onLogout={handleLogout} onStart={handleStartWizard} onAuth={() => setCurrentView('auth')} onAdmin={() => setCurrentView('admin')} />}
+        {currentView === 'auth' && <AuthPage onBack={() => setCurrentView('landing')} onAuthSuccess={handleLogin} />}
+        {currentView === 'dashboard' && <Dashboard onNew={() => handleStartWizard(null)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} />}
+        {currentView === 'admin' && <AdminDashboard onLogout={handleLogout} />}
         {currentView === 'wizard' && <AICreatorWizard initialConfig={wizardConfig} onFinish={() => setCurrentView('dashboard')} />}
       </main>
     </>

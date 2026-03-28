@@ -30,37 +30,33 @@
                   <span onclick="document.getElementById('showcase-sec').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer; color: #ccc; font-weight: 600; transition: all 0.2s ease; letter-spacing: 0.5px; font-size: 1rem;">Showcase</span>
                 </div>
 
-                <div style="flex: 1; display: flex; justify-content: flex-end;">
-                  <button class="btn-secondary" onclick="navigate('auth')" style="padding: 8px 24px; font-weight: 600;">Sign In</button>
+                <div id="nav-auth-container" style="flex: 1; display: flex; justify-content: flex-end;">
+                  <button id="btn-login-main" class="btn-secondary" onclick="navigate('auth')" style="padding: 8px 24px; font-weight: 600;">Sign In</button>
                 </div>
               </nav>
 
-              <section style="min-height: calc(100vh - 80px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 2rem;">
-                <div class="glass-panel animate-fade-delay-1" style="max-width: 900px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.05); background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%); padding: 4rem 2rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
-                  <h1 class="gradient-text" style="font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1.5px;">
-                    Craft a Professional Portfolio Engine with AI
-                  </h1>
-                  <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 3.5rem; max-width: 700px; margin: 0 auto; line-height: 1.6;">
-                    Elevate your digital presence. Let our intelligent AI engine analyze your professional background and generate a stunning, bespoke portfolio website instantly.
-                  </p>
-                  
-                  <div class="animate-fade-delay-2" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn-primary" onclick="startWizard()" style="padding: 16px 48px; font-size: 1.2rem;">
-                      Start AI Generation ✨
-                    </button>
-                    <button class="btn-secondary" onclick="document.getElementById('templates-sec').scrollIntoView({behavior: 'smooth'})" style="padding: 16px 48px; font-size: 1.2rem; background: rgba(255,255,255,0.05);">
-                      Browse Templates
-                    </button>
+              <section style="min-height: calc(100vh - 80px); display: flex; align-items: center; justify-content: center; padding: 0 2rem;">
+                <div class="hero-layout animate-fade-delay-1" style="max-width: 1200px; margin: 0 auto;">
+                  <div class="glass-panel" style="flex: 1.5; border: 1px solid rgba(255,255,255,0.05); background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%); padding: 4rem 3rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); text-align: left;">
+                    <h1 class="gradient-text" style="font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1.5px;">
+                      Craft a Professional Portfolio Engine with AI
+                    </h1>
+                    <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 3.5rem; line-height: 1.6;">
+                      Elevate your digital presence. Let our intelligent AI engine analyze your professional background and generate a stunning, bespoke portfolio website instantly.
+                    </p>
+                    
+                    <div class="animate-fade-delay-2" style="display: flex; gap: 1.5rem; justify-content: flex-start; flex-wrap: wrap;">
+                      <button class="btn-primary" onclick="startWizard()" style="padding: 16px 48px; font-size: 1.2rem;">
+                        Start AI Generation ✨
+                      </button>
+                      <button class="btn-secondary" onclick="document.getElementById('templates-sec').scrollIntoView({behavior: 'smooth'})" style="padding: 16px 48px; font-size: 1.2rem; background: rgba(255,255,255,0.05);">
+                        Browse Templates
+                      </button>
+                    </div>
                   </div>
-                </div>
-                
-                <div class="animate-fade-delay-2" style="margin-top: 4rem; color: var(--text-secondary); opacity: 0.6; font-size: 0.9rem;">
-                  <p>Trusted by professionals from Top Tech Companies</p>
-                  <div style="display: flex; gap: 2rem; margin-top: 1rem; justify-content: center;">
-                    <span style="font-weight: 600; letter-spacing: 1px;">GOOGLE</span>
-                    <span style="font-weight: 600; letter-spacing: 1px;">META</span>
-                    <span style="font-weight: 600; letter-spacing: 1px;">AMAZON</span>
-                    <span style="font-weight: 600; letter-spacing: 1px;">MICROSOFT</span>
+
+                  <div class="hero-image-container animate-fade-delay-2">
+                    <img src="src/assets/hero.png" alt="AIFolio Engine" class="floating-hero">
                   </div>
                 </div>
               </section>

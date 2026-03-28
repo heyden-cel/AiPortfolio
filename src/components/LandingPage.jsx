@@ -1,6 +1,7 @@
 import { useRef } from 'react';
+import heroImg from '../assets/hero.png';
 
-export default function LandingPage({ onStart, onAuth, onAdmin }) {
+export default function LandingPage({ onStart, onAuth, onAdmin, isLoggedIn, onLogout }) {
   const showcaseRef = useRef(null);
   const templatesRef = useRef(null);
 
@@ -23,40 +24,40 @@ export default function LandingPage({ onStart, onAuth, onAdmin }) {
           <span onClick={scrollToShowcase} style={{ cursor: 'pointer', color: '#ccc', fontWeight: 600, transition: 'all 0.2s ease', letterSpacing: '0.5px', fontSize: '1rem' }} onMouseEnter={e => {e.currentTarget.style.color = '#fff'; e.currentTarget.style.textShadow = '0 0 10px rgba(255,255,255,0.3)'}} onMouseLeave={e => {e.currentTarget.style.color = '#ccc'; e.currentTarget.style.textShadow = 'none'}}>Showcase</span>
         </div>
 
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-          <button className="btn-secondary" onClick={onAuth} style={{ padding: '8px 24px', fontWeight: 600 }}>Sign In</button>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
+          {isLoggedIn ? (
+            <>
+              <button className="btn-secondary" onClick={() => onStart(null)} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>Dashboard</button>
+              <button className="btn-secondary" onClick={onLogout} style={{ padding: '8px 20px', fontSize: '0.9rem', background: 'rgba(255,255,255,0.05)' }}>Log Out</button>
+            </>
+          ) : (
+            <button className="btn-secondary" onClick={onAuth} style={{ padding: '8px 24px', fontWeight: 600 }}>Sign In</button>
+          )}
         </div>
       </nav>
 
-      <section style={{ minHeight: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 2rem' }}>
-        <div className="glass-panel animate-fade-delay-1" style={{ maxWidth: '900px', margin: '0 auto', border: '1px solid rgba(255,255,255,0.05)', background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%)', padding: '4rem 2rem', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}>
-          <h1 className="gradient-text" style={{ fontSize: '4.5rem', lineHeight: '1.1', marginBottom: '1.5rem', letterSpacing: '-1.5px' }}>
-            Craft a Professional Portfolio Engine with AI
-          </h1>
-          <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '3.5rem', maxWidth: '700px', margin: '0 auto 3.5rem auto', lineHeight: '1.6' }}>
-            Elevate your digital presence. Let our intelligent AI engine analyze your professional background and generate a stunning, bespoke portfolio website instantly.
-          </p>
-          
-          <div className="animate-fade-delay-2" style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button className="btn-primary" onClick={onStart} style={{ padding: '16px 48px', fontSize: '1.2rem' }}>
-              Start AI Generation ✨
-            </button>
-            <button className="btn-secondary" onClick={scrollToTemplates} style={{ padding: '16px 48px', fontSize: '1.2rem', background: 'rgba(255,255,255,0.05)' }}>
-              Browse Templates
-            </button>
-            <button className="btn-secondary" onClick={scrollToShowcase} style={{ padding: '16px 48px', fontSize: '1.2rem' }}>
-              View Showcase
-            </button>
+      <section style={{ minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 2rem' }}>
+        <div className="hero-layout animate-fade-delay-1" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="glass-panel" style={{ flex: 1.5, border: '1px solid rgba(255,255,255,0.05)', background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%)', padding: '4rem 3rem', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)', textAlign: 'left' }}>
+            <h1 className="gradient-text" style={{ fontSize: '4.5rem', lineHeight: '1.1', marginBottom: '1.5rem', letterSpacing: '-1.5px' }}>
+              Craft a Professional Portfolio Engine with AI
+            </h1>
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '3.5rem', lineHeight: '1.6' }}>
+              Elevate your digital presence. Let our intelligent AI engine analyze your professional background and generate a stunning, bespoke portfolio website instantly.
+            </p>
+            
+            <div className="animate-fade-delay-2" style={{ display: 'flex', gap: '1.5rem', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
+              <button className="btn-primary" onClick={() => onStart(null)} style={{ padding: '16px 48px', fontSize: '1.2rem' }}>
+                Start AI Generation ✨
+              </button>
+              <button className="btn-secondary" onClick={scrollToTemplates} style={{ padding: '16px 48px', fontSize: '1.2rem', background: 'rgba(255,255,255,0.05)' }}>
+                Browse Templates
+              </button>
+            </div>
           </div>
-        </div>
-        
-        <div className="animate-fade-delay-2" style={{ marginTop: '4rem', color: 'var(--text-secondary)', opacity: 0.6, fontSize: '0.9rem' }}>
-          <p>Trusted by professionals from Top Tech Companies</p>
-          <div style={{ display: 'flex', gap: '2rem', marginTop: '1rem', justifyContent: 'center' }}>
-            <span style={{ fontWeight: 600, letterSpacing: '1px' }}>GOOGLE</span>
-            <span style={{ fontWeight: 600, letterSpacing: '1px' }}>META</span>
-            <span style={{ fontWeight: 600, letterSpacing: '1px' }}>AMAZON</span>
-            <span style={{ fontWeight: 600, letterSpacing: '1px' }}>MICROSOFT</span>
+
+          <div className="hero-image-container animate-fade-delay-2">
+            <img src={heroImg} alt="AIFolio Engine" className="floating-hero" />
           </div>
         </div>
       </section>
