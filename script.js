@@ -822,6 +822,31 @@ function renderWizardResult() {
                 </div>
               </div>
 
+              <div class="glass-card bento-item bento-availability" style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                 <div class="availability-dot"></div>
+                 <div style="font-weight: 700; font-size: 0.9rem;">AVAILABLE FOR WORK</div>
+              </div>
+
+              <div class="glass-card bento-item bento-project" style="background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);">
+                 <div class="bento-project-thumb">
+                    <div style="font-size: 3rem; opacity: 0.5;">🖼️</div>
+                 </div>
+                 <h3 style="margin: 0 0 0.5rem 0; font-size: 1.4rem;">Featured Project</h3>
+                 <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">A high-performance digital engine designed for modern enterprises.</p>
+                 <span class="premium-button" style="padding: 10px 20px; font-size: 0.8rem; align-self: flex-start;">Case Study ↗</span>
+              </div>
+
+              <div class="glass-card bento-item bento-quote" style="justify-content: center; text-align: center;">
+                 <div class="bento-quote-mark">“</div>
+                 <p style="font-style: italic; color: #fff; line-height: 1.6; font-size: 1.1rem;">Engineering digital excellence through modern patterns.</p>
+              </div>
+
+              <div class="glass-card bento-item bento-social" style="flex-direction: row; align-items: center; justify-content: center; gap: 1.5rem;">
+                 <span style="font-size: 1.5rem; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">𝕏</span>
+                 <span style="font-size: 1.5rem; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">🐙</span>
+                 <span style="font-size: 1.5rem; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">💼</span>
+              </div>
+
               <div class="glass-card bento-item bento-bio" style="position: relative;">
                 <div class="ambient-orb" style="position: absolute; bottom: -100px; left: -100px; width: 300px; height: 300px; background: ${secondaryAccent}; filter: blur(120px); opacity: 0.08; border-radius: 50%;"></div>
                 <div style="position: relative; z-index: 1;">

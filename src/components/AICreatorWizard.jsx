@@ -358,6 +358,31 @@ export default function AICreatorWizard({ onFinish, initialConfig }) {
                 </div>
               </div>
 
+              <div className="glass-card bento-item bento-availability" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                 <div className="availability-dot"></div>
+                 <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>AVAILABLE FOR WORK</div>
+              </div>
+
+              <div className="glass-card bento-item bento-project" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%)' }}>
+                 <div className="bento-project-thumb">
+                    <div style={{ fontSize: '3rem', opacity: 0.5 }}>🖼️</div>
+                 </div>
+                 <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.4rem' }}>Featured Project</h3>
+                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>A high-performance digital engine designed for modern enterprises.</p>
+                 <span className="premium-button" style={{ padding: '10px 20px', fontSize: '0.8rem', alignSelf: 'flex-start' }}>Case Study ↗</span>
+              </div>
+
+              <div className="glass-card bento-item bento-quote" style={{ justifyContent: 'center', textAlign: 'center' }}>
+                 <div className="bento-quote-mark">“</div>
+                 <p style={{ fontStyle: 'italic', color: '#fff', lineHeight: 1.6, fontSize: '1.1rem' }}>Engineering digital excellence through modern patterns.</p>
+              </div>
+
+              <div className="glass-card bento-item bento-social" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '1.5rem' }}>
+                 <span style={{ fontSize: '1.5rem', cursor: 'pointer' }}>𝕏</span>
+                 <span style={{ fontSize: '1.5rem', cursor: 'pointer' }}>🐙</span>
+                 <span style={{ fontSize: '1.5rem', cursor: 'pointer' }}>💼</span>
+              </div>
+
               <div className="glass-card bento-item bento-bio" style={{ position: 'relative' }}>
                 <div className="ambient-orb" style={{ position: 'absolute', bottom: '-100px', left: '-100px', width: '300px', height: '300px', background: secondaryAccent, filter: 'blur(120px)', opacity: 0.08, borderRadius: '50%' }}></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
