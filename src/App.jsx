@@ -8,7 +8,7 @@ import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
-  const [currentView, setCurrentView] = useState(localStorage.getItem('isLoggedIn') === 'true' ? 'landing' : 'auth');
+  const [currentView, setCurrentView] = useState(localStorage.getItem('isLoggedIn') === 'true' ? 'dashboard' : 'auth');
   const [wizardConfig, setWizardConfig] = useState(null);
   const [pendingWizardAfterLogin, setPendingWizardAfterLogin] = useState(null);
 

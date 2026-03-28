@@ -3,7 +3,7 @@ let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 let pendingGeneration = false;
 
 // State variables
-let currentView = isLoggedIn ? 'landing' : 'auth';
+let currentView = isLoggedIn ? 'dashboard' : 'auth';
 let wizardStep = 1;
 let isLoginMode = true;
 let formData = {
