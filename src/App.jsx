@@ -7,8 +7,8 @@ import AdminDashboard from './components/AdminDashboard';
 import './App.css';
 
 function App() {
-  const [currentView, setCurrentView] = useState('landing');
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+  const [currentView, setCurrentView] = useState(localStorage.getItem('isLoggedIn') === 'true' ? 'landing' : 'auth');
   const [wizardConfig, setWizardConfig] = useState(null);
   const [pendingWizardAfterLogin, setPendingWizardAfterLogin] = useState(null);
 

@@ -1,5 +1,9 @@
+// Persistent Auth State
+let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+let pendingGeneration = false;
+
 // State variables
-let currentView = 'landing';
+let currentView = isLoggedIn ? 'landing' : 'auth';
 let wizardStep = 1;
 let isLoginMode = true;
 let formData = {
@@ -16,8 +20,7 @@ let formData = {
 };
 
 // Persistent Auth State
-let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-let pendingGeneration = false;
+// (Moved up to support initial currentView)
 
 // Data models
 const templates = [
@@ -52,6 +55,7 @@ renderTemplates();
 renderShowcase();
 renderDashboardList();
 updateNavbar();
+navigate(currentView);
 
 // View Navigation
 function navigate(viewName) {
