@@ -8,13 +8,16 @@ import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+  const [userEmail, setUserEmail] = useState(localStorage.getItem('userEmail') || '');
   const [currentView, setCurrentView] = useState(localStorage.getItem('isLoggedIn') === 'true' ? 'landing' : 'auth');
   const [wizardConfig, setWizardConfig] = useState(null);
   const [pendingWizardAfterLogin, setPendingWizardAfterLogin] = useState(null);
 
-  const handleLogin = () => {
+  const handleLogin = (email) => {
     setIsLoggedIn(true);
+    setUserEmail(email || '');
     localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userEmail', email || '');
     if (pendingWizardAfterLogin) {
       setWizardConfig(pendingWizardAfterLogin);
       setPendingWizardAfterLogin(null);
@@ -26,7 +29,9 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserEmail('');
     localStorage.setItem('isLoggedIn', 'false');
+    localStorage.setItem('userEmail', '');
     setCurrentView('landing');
   };
 
@@ -48,7 +53,7 @@ function App() {
       <main className="app-container">
         {currentView === 'landing' && <LandingPage isLoggedIn={isLoggedIn} onLogout={handleLogout} onStart={handleStartWizard} onAuth={() => setCurrentView('auth')} onAdmin={() => setCurrentView('admin')} />}
         {currentView === 'auth' && <AuthPage onBack={() => setCurrentView('landing')} onAuthSuccess={handleLogin} />}
-        {currentView === 'dashboard' && <Dashboard onNew={() => handleStartWizard(null)} onOpen={(config) => handleStartWizard(config)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} />}
+        {currentView === 'dashboard' && <Dashboard userEmail={userEmail} onNew={() => handleStartWizard(null)} onOpen={(config) => handleStartWizard(config)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} onAdmin={() => setCurrentView('admin')} />}
         {currentView === 'admin' && <AdminDashboard onLogout={handleLogout} />}
         {currentView === 'wizard' && <AICreatorWizard initialConfig={wizardConfig} onFinish={() => setCurrentView('dashboard')} />}
       </main>

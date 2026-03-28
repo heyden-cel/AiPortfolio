@@ -1,5 +1,6 @@
 // Persistent Auth State
 let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+let currentUserEmail = localStorage.getItem('currentUserEmail') || '';
 let pendingGeneration = false;
 
 // State variables
@@ -74,6 +75,31 @@ function navigate(viewName) {
         target.classList.add('active');
     }
     window.scrollTo(0,0);
+
+    if (viewName === 'dashboard') {
+        updateDashboardNav();
+    }
+}
+
+function updateDashboardNav() {
+    const navActions = document.getElementById('dashboard-nav-actions');
+    if (!navActions) return;
+
+    // Check if we should add admin hub button
+    const isAdmin = currentUserEmail === 'admin@gmail.com';
+    const existingAdminBtn = document.getElementById('btn-admin-hub-dashboard');
+    
+    if (isAdmin && !existingAdminBtn) {
+        const btn = document.createElement('button');
+        btn.id = 'btn-admin-hub-dashboard';
+        btn.className = 'btn-secondary';
+        btn.onclick = () => navigate('admin');
+        btn.innerHTML = '✦ Admin Hub';
+        btn.style.cssText = 'padding: 8px 24px; font-size: 0.9rem; border: 1px solid #ff0080; color: #ff0080; background: rgba(255, 0, 128, 0.05);';
+        navActions.prepend(btn);
+    } else if (!isAdmin && existingAdminBtn) {
+        existingAdminBtn.remove();
+    }
 }
 
 // Rendering HTML
@@ -214,7 +240,9 @@ function updateNavbar() {
 
 function login() {
     isLoggedIn = true;
+    currentUserEmail = document.getElementById('auth-submit-btn').parentElement.querySelector('input[type="email"]').value || '';
     localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUserEmail', currentUserEmail);
     updateNavbar();
     
     if (pendingGeneration) {
@@ -228,7 +256,9 @@ function login() {
 
 function logout() {
     isLoggedIn = false;
+    currentUserEmail = '';
     localStorage.setItem('isLoggedIn', 'false');
+    localStorage.setItem('currentUserEmail', '');
     updateNavbar();
     navigate('landing');
 }
@@ -255,7 +285,9 @@ function handleAdminLogin(e) {
         err.style.display = 'none';
         document.getElementById('admin-login-view').style.display = 'none';
         isLoggedIn = true;
+        currentUserEmail = email;
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUserEmail', email);
         renderAdminDashboard();
     } else {
         err.style.display = 'block';

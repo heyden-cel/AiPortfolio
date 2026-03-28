@@ -1,4 +1,5 @@
-export default function Dashboard({ onNew, onLogout, onHome, onOpen }) {
+export default function Dashboard({ onNew, onLogout, onHome, onOpen, onAdmin, userEmail }) {
+  const isAdmin = userEmail === 'admin@gmail.com';
   // Mock previously generated portfolios
   const previousWork = [
     { id: 1, title: 'Neo-Brutalism Designer Folio', date: 'Oct 12, 2023', views: 342, status: 'Published', config: { role: 'Product Designer', skills: 'Figma, Prototyping, CSS', aesthetic: 'Vibrant Neo-Brutalism', layout: 'Bento Grid', colorPalette: 'Cyberpunk Neon', bio: 'Living on the edge of design and brutalist architecture.' } },
@@ -11,6 +12,11 @@ export default function Dashboard({ onNew, onLogout, onHome, onOpen }) {
       <nav className="glass-panel" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', padding: '1rem 2rem', borderRadius: '15px' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>My Dashboard</h2>
         <div style={{ display: 'flex', gap: '1rem' }}>
+          {isAdmin && (
+            <button className="btn-secondary" onClick={onAdmin} style={{ padding: '8px 24px', fontSize: '0.9rem', border: '1px solid #ff0080', color: '#ff0080', background: 'rgba(255, 0, 128, 0.05)' }}>
+              ✦ Admin Hub
+            </button>
+          )}
           <button className="btn-secondary" onClick={onHome} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>Home</button>
           <button className="btn-primary" onClick={onNew} style={{ padding: '8px 24px', fontSize: '0.9rem' }}>+ Create New</button>
           <button className="btn-secondary" onClick={onLogout} style={{ padding: '8px 20px', fontSize: '0.9rem' }}>Log Out</button>

@@ -39,12 +39,7 @@ export default function AuthPage({ onBack, onAuthSuccess }) {
             <input type="email" className="neo-input" placeholder="you@example.com" required />
           </div>
 
-          <div>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Password</label>
-            <input type="password" className="neo-input" placeholder="••••••••" required />
-          </div>
-
-          <button type="submit" className="btn-primary" style={{ marginTop: '1rem', padding: '14px', width: '100%' }}>
+          <button type="submit" className="btn-primary" onClick={() => onAuthSuccess(document.querySelector('input[type="email"]').value)} style={{ marginTop: '1rem', padding: '14px', width: '100%' }}>
             {isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>
