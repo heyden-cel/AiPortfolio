@@ -1,19 +1,19 @@
 import { useState } from 'react';
 
 export default function AICreatorWizard({ onFinish, initialConfig }) {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(initialConfig ? 7 : 1);
   const [isGenerating, setIsGenerating] = useState(false);
   const [formData, setFormData] = useState({
-    role: '',
-    skills: '',
+    role: initialConfig?.role || '',
+    skills: initialConfig?.skills || '',
     aesthetic: initialConfig?.aesthetic || 'Dark & Modern',
     layout: initialConfig?.layout || 'Bento Grid',
     colorPalette: initialConfig?.colorPalette || 'Deep Space (Dark)',
     typography: initialConfig?.typography || 'System Default',
-    image: null,
-    bio: '',
-    socialGithub: '',
-    socialLinkedin: ''
+    image: initialConfig?.image || null,
+    bio: initialConfig?.bio || '',
+    socialGithub: initialConfig?.socialGithub || '',
+    socialLinkedin: initialConfig?.socialLinkedin || ''
   });
 
   const nextStep = () => {

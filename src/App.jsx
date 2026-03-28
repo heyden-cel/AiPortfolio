@@ -48,7 +48,7 @@ function App() {
       <main className="app-container">
         {currentView === 'landing' && <LandingPage isLoggedIn={isLoggedIn} onLogout={handleLogout} onStart={handleStartWizard} onAuth={() => setCurrentView('auth')} onAdmin={() => setCurrentView('admin')} />}
         {currentView === 'auth' && <AuthPage onBack={() => setCurrentView('landing')} onAuthSuccess={handleLogin} />}
-        {currentView === 'dashboard' && <Dashboard onNew={() => handleStartWizard(null)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} />}
+        {currentView === 'dashboard' && <Dashboard onNew={() => handleStartWizard(null)} onOpen={(config) => handleStartWizard(config)} onLogout={handleLogout} onHome={() => setCurrentView('landing')} />}
         {currentView === 'admin' && <AdminDashboard onLogout={handleLogout} />}
         {currentView === 'wizard' && <AICreatorWizard initialConfig={wizardConfig} onFinish={() => setCurrentView('dashboard')} />}
       </main>

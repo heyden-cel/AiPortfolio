@@ -45,9 +45,9 @@ const showcaseData = [
 ];
 
 const dashboardProjects = [
-  { id: 1, title: 'Neo-Brutalism Designer Folio', date: 'Oct 12, 2023', views: 342, status: 'Published' },
-  { id: 2, title: 'Dark Mode Developer Folio', date: 'Aug 04, 2023', views: 1045, status: 'Published' },
-  { id: 3, title: 'Clean Architecture Test', date: 'Jul 21, 2023', views: 12, status: 'Draft' }
+  { id: 1, title: 'Neo-Brutalism Designer Folio', date: 'Oct 12, 2023', views: 342, status: 'Published', config: { role: 'Product Designer', skills: 'Figma, Prototyping, CSS', aesthetic: 'Vibrant Neo-Brutalism', layout: 'Bento Grid', colorPalette: 'Cyberpunk Neon', bio: 'Living on the edge of design and brutalist architecture.' } },
+  { id: 2, title: 'Dark Mode Developer Folio', date: 'Aug 04, 2023', views: 1045, status: 'Published', config: { role: 'Fullstack Developer', skills: 'React, Node.js, AWS', aesthetic: 'Dark & Modern', layout: 'Classic Hero & Sections', colorPalette: 'Deep Space (Dark)', bio: 'Architecting the web with clean code and dark mode aesthetics.' } },
+  { id: 3, title: 'Clean Architecture Test', date: 'Jul 21, 2023', views: 12, status: 'Draft', config: { role: 'Software Engineer', skills: 'Go, Kubernetes, Redis', aesthetic: 'Minimalist Monospace', layout: 'Fullscreen Interactive', colorPalette: 'Muted Earth', bio: 'Efficiency and scalability first.' } }
 ];
 
 // Initialization - direct call since script is at the bottom of body
@@ -157,7 +157,7 @@ function renderDashboardList() {
         const statusBg = work.status === 'Published' ? 'rgba(39, 201, 63, 0.15)' : 'rgba(255, 189, 46, 0.15)';
         const statusColor = work.status === 'Published' ? '#27c93f' : '#ffbd2e';
         return `
-        <div class="glass-panel" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; transition: all 0.2s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05);"
+        <div class="glass-panel" onclick="openProject(${work.id})" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; transition: all 0.2s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05);"
              onmouseenter="this.style.background='rgba(255,255,255,0.08)'" onmouseleave="this.style.background='var(--glass-bg)'">
           <div style="display: flex; align-items: center; gap: 2rem;">
             <div style="width: 48px; height: 48px; border-radius: 12px; background: var(--accent-primary); opacity: 0.8; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold;">
@@ -176,6 +176,22 @@ function renderDashboardList() {
           </div>
         </div>`;
     }).join('');
+}
+
+function openProject(id) {
+    const project = dashboardProjects.find(p => p.id === id);
+    if (!project) return;
+    
+    // Load config into formData
+    formData = { ...formData, ...project.config };
+    
+    // Show result view
+    document.getElementById('wizard-form-container').style.display = 'none';
+    document.getElementById('wizard-generating-container').style.display = 'none';
+    document.getElementById('wizard-result-container').style.display = 'block';
+    
+    navigate('wizard');
+    renderWizardResult();
 }
 
 function updateNavbar() {
